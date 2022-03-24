@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package com.akkagrpc.proto;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option java_package = "com.akkagrpc.grpc";
+option java_multiple_files = true;
+ 
+message GetMovieRequest {
+  string movieid = 1;
+}
+message GetMovieResponse {
+  Movie movie = 1;
+}
+
+message GetMoviesResponse {
+  Movie movie = 1;
+}
+
+message Movie {
+  string movieid = 1;
+  string title = 2;
+  float rating = 3;
+  string description = 4;
+  string genre = 5;
+}
+
+message RegisterMovieRequest {
+  string title = 2;
+  float rating = 3;
+  string description = 4;
+  string genre = 5;
+}
+
+message RegisterMovieResponse {
+  string movieid = 1;
+}
+
+message ValidateActiveDirectoryDetailsRequest {
+  string domainName = 1;
+  string ipAddress = 2;
+  string port = 3;
+  string username = 4;
+  string password = 5;
+}
+
+message ValidateActiveDirectoryDetailsResponse {
+  bool response = 1;
+}
+
+service MovieService {
+  rpc getMovie(GetMovieRequest) returns (GetMovieResponse) {
+    option (google.api.http) = {
+      get: "/movies/{movieid}"
+    };
+  };
+  rpc getMovies(google.protobuf.Empty) returns (stream GetMoviesResponse) {
+    option (google.api.http) = {
+      get: "/movies"
+    };
+  };
+  rpc RegisterMovie (RegisterMovieRequest) returns (RegisterMovieResponse) {
+    option(google.api.http) = {
+      post: "/securetemplates"
+      body: "*"
+    };
+  }
+}
