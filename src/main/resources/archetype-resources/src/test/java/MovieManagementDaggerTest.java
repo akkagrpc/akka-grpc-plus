@@ -12,10 +12,10 @@ public class MovieManagementDaggerTest {
 
     @Test
     public void givenGeneratedComponent_whenBuildingSecureTemplateApp_thenDependenciesInjected() {
-        MovieManagementApp.MovieApp ${package}App = DaggerMovieManagementApp_MovieApp.create();
+        MovieManagementApp.MovieApp movieApp = DaggerMovieManagementApp_MovieApp.create();
 
-        CommandServer injectedCommandServer = ${package}App.commandServer();
-        ActorSystem<?> injectedActorSystem = ${package}App.actorSystem();
+        CommandServer injectedCommandServer = movieApp.commandServer();
+        ActorSystem<?> injectedActorSystem = movieApp.actorSystem();
 
         Assert.assertNotNull(injectedCommandServer);
         Assert.assertNotNull(injectedActorSystem);

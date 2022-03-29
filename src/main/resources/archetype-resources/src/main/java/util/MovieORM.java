@@ -11,7 +11,7 @@ public final class MovieORM {
 
     public static Movie mapRowToMovie(io.r2dbc.spi.Row row){
         return Movie.builder()
-                .${package}Id(row.get("${package}id", String.class))
+                .movieId(row.get("movieid", String.class))
                 .title(row.get("title", String.class))
                 .description(row.get("description", String.class))
                 .rating(row.get("rating", Float.class))

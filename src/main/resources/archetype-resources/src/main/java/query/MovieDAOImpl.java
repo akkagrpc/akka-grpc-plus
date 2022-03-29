@@ -48,11 +48,11 @@ public class MovieDAOImpl implements MovieDAO {
     }
 
     @Override
-    public final Mono<Movie> getMovieById(String ${package}Id) {
+    public final Mono<Movie> getMovieById(String movieId) {
         return Mono.usingWhen(connectionFactory.create(),
                 connection ->
-                        Mono.from(connection.createStatement("SELECT * FROM public.${package} WHERE ${package}id = ${symbol_dollar}1")
-                                        .bind("${symbol_dollar}1", ${package}Id)
+                        Mono.from(connection.createStatement("SELECT * FROM public.movie WHERE movieid = $1")
+                                        .bind("$1", movieId)
                                         .execute())
                                 .map(result -> result.map((row, rowMetadata) -> MovieORM.mapRowToMovie(row)))
                                 .flatMap(pub -> Mono.from(pub)),
@@ -60,12 +60,12 @@ public class MovieDAOImpl implements MovieDAO {
     }
 
     @Override
-    public final Source<Movie, NotUsed> getMovieByTemplateId(String ${package}Id) {
+    public final Source<Movie, NotUsed> getMovieByTemplateId(String movieId) {
         R2dbc r2dbc = new R2dbc(connectionFactory);
         return Source.fromPublisher(r2dbc.withHandle(
                 handle -> {
-                    return handle.select("SELECT * FROM public.${package} WHERE ${package}id = ${symbol_dollar}1")
-                            .bind("${symbol_dollar}1", ${package}Id)
+                    return handle.select("SELECT * FROM public.movie WHERE movieid = $1")
+                            .bind("$1", movieId)
                             .mapResult(result -> result.map((row, rowMetadata) -> MovieORM.mapRowToMovie(row)));
                 }
         ));
@@ -76,7 +76,7 @@ public class MovieDAOImpl implements MovieDAO {
         R2dbc r2dbc = new R2dbc(connectionFactory);
         return r2dbc.withHandle(
                 handle -> {
-                    return handle.select("SELECT * FROM public.${package}")
+                    return handle.select("SELECT * FROM public.movie")
                             .mapResult(result -> result.map((row, rowMetadata) -> MovieORM.mapRowToMovie(row)));
                 }
         );

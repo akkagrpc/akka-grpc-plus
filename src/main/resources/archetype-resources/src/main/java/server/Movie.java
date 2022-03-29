@@ -15,7 +15,7 @@ import lombok.Value;
 @JsonDeserialize
 @Builder
 public class Movie {
-    String ${package}Id;
+    String movieId;
     String title;
     String description;
     Float rating;
@@ -27,8 +27,8 @@ public class Movie {
     String smStatus;
 
     @JsonCreator
-    public Movie(String ${package}Id, String title, String description, Float rating, String genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
-        this.${package}Id = ${package}Id;
+    public Movie(String movieId, String title, String description, Float rating, String genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
+        this.movieId = movieId;
         this.title = title;
         this.description = description;
         this.rating = rating;

@@ -11,7 +11,7 @@ import lombok.Value;
 @Value
 @JsonDeserialize
 public class MovieRegistered implements Event {
-    public String ${package}Id;
+    public String movieId;
     public String title;
     public String description;
     public Float rating;
@@ -20,8 +20,8 @@ public class MovieRegistered implements Event {
     public String createdDateTime;
 
     @JsonCreator
-    public MovieRegistered(String ${package}Id, String title, String description, Float rating, String genre, String createdBy, String createdDateTime) {
-        this.${package}Id = ${package}Id;
+    public MovieRegistered(String movieId, String title, String description, Float rating, String genre, String createdBy, String createdDateTime) {
+        this.movieId = movieId;
         this.title = title;
         this.description = description;
         this.rating = rating;

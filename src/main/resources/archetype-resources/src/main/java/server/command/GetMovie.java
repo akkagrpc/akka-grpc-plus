@@ -11,12 +11,12 @@ import ${package}.server.reply.Summary;
 @Getter
 public class GetMovie implements Command<Summary> {
 
-    public String ${package}Id;
+    public String movieId;
     public ActorRef<? super Summary> replyTo;
 
     @JsonCreator
-    public GetMovie(String ${package}Id, ActorRef<Summary> replyTo) {
-        this.${package}Id = ${package}Id;
+    public GetMovie(String movieId, ActorRef<Summary> replyTo) {
+        this.movieId = movieId;
         this.replyTo = replyTo;
     }
 }

@@ -10,7 +10,7 @@ import akka.cluster.sharding.typed.javadsl.ClusterSharding;
 import akka.cluster.sharding.typed.javadsl.EntityRef;
 import akka.grpc.javadsl.Metadata;
 import akka.stream.javadsl.Source;
-import ${groupId}.grpc.*;
+import com.akkagrpc.grpc.*;
 import com.google.common.base.Strings;
 import com.google.protobuf.Empty;
 import io.jsonwebtoken.Claims;
@@ -46,26 +46,26 @@ public final class MovieServiceImpl implements MovieServicePowerApi {
     private final ClusterSharding clusterSharding;
     private final Executor blockingJdbcExecutor;
     private final MeterRegistry meterRegistry;
-    private final Counter secureTemplateCounter;
-    private final MovieDAO secureTemplateDAO;
+    private final Counter movieCounter;
+    private final MovieDAO movieDAO;
     private final ActiveDirectoryClient activeDirectoryClient;
 
     @Inject
-    public MovieServiceImpl(ActorSystem<?> system, MovieDAO secureTemplateDAO,
+    public MovieServiceImpl(ActorSystem<?> system, MovieDAO movieDAO,
                                      MicrometerClient micrometerClient, ActiveDirectoryClient activeDirectoryClient) {
-        this.secureTemplateDAO = secureTemplateDAO;
+        this.movieDAO = movieDAO;
         this.activeDirectoryClient = activeDirectoryClient;
         DispatcherSelector dispatcherSelector = DispatcherSelector.fromConfig("akka.persistence.r2dbc.journal.plugin-dispatcher");
         this.askTimeout = system.settings().config().getDuration("secure-template-service.ask-timeout");
         this.clusterSharding = ClusterSharding.get(system);
         this.blockingJdbcExecutor = system.dispatchers().lookup(dispatcherSelector);
         this.meterRegistry = micrometerClient.ixMonitoringSystem();
-        this.secureTemplateCounter = this.meterRegistry.counter("template", "type", "${package}");
+        this.movieCounter = this.meterRegistry.counter("movie", "genre");
 
     }
 
-    private EntityRef<Command> entityRef(String ${package}Id) {
-        return clusterSharding.entityRefFor(MovieAggregate.ENTITY_KEY, ${package}Id);
+    private EntityRef<Command> entityRef(String movieId) {
+        return clusterSharding.entityRefFor(MovieAggregate.ENTITY_KEY, movieId);
     }
 
     @Override

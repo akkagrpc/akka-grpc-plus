@@ -36,13 +36,13 @@ public class MovieManagementApp {
     }
 
     public static void main(String[] args) {
-        MovieApp ${package}App = DaggerMovieManagementApp_MovieApp.builder().build();
-        ${package}App.akkaManagement().start();
-        ${package}App.clusterBootstrap().start();
-        MovieAggregate.init(${package}App.actorSystem());
-        ${package}App.dbProjection().startProjection();
-        ${package}App.eventsProjection().startProjection();
-        ${package}App.commandServer().startCommandServer();
-        ${package}App.queryServer().startQueryServer();
+        MovieApp movieApp = DaggerMovieManagementApp_MovieApp.builder().build();
+        movieApp.akkaManagement().start();
+        movieApp.clusterBootstrap().start();
+        MovieAggregate.init(movieApp.actorSystem());
+        movieApp.dbProjection().startProjection();
+        movieApp.eventsProjection().startProjection();
+        movieApp.commandServer().startCommandServer();
+        movieApp.queryServer().startQueryServer();
     }
 }

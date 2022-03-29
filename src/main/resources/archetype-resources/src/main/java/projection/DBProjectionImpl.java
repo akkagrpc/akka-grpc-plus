@@ -68,11 +68,11 @@ public class DBProjectionImpl extends R2dbcHandler<EventEnvelope<Event>> impleme
         Event event = envelope.event();
         if (event instanceof MovieRegistered) {
             MovieRegistered templateRegistered = (MovieRegistered) event;
-            logger.info("Secure template with ID {} was created at {}", templateRegistered.${package}Id, templateRegistered.createdDateTime);
+            logger.info("Secure template with ID {} was created at {}", templateRegistered.movieId, templateRegistered.createdDateTime);
             Statement stmt =
-                    session.createStatement("INSERT into ${package} (${package}id, title, description, rating, genre, createdby, creationdatetime, smstatus) " +
-                                    "VALUES (${symbol_dollar}1, ${symbol_dollar}2, ${symbol_dollar}3, ${symbol_dollar}4, ${symbol_dollar}5, ${symbol_dollar}6, ${symbol_dollar}7, ${symbol_dollar}8, ${symbol_dollar}9, ${symbol_dollar}10, ${symbol_dollar}11, ${symbol_dollar}12, ${symbol_dollar}13, ${symbol_dollar}14, ${symbol_dollar}15)")
-                            .bind(0, templateRegistered.${package}Id)
+                    session.createStatement("INSERT into movie (movieid, title, description, rating, genre, createdby, creationdatetime, smstatus) " +
+                                    "VALUES ($1, $2, $3, $4, $5, $6, $7, $8)")
+                            .bind(0, templateRegistered.movieId)
                             .bind(1, templateRegistered.title)
                             .bind(2, templateRegistered.description)
                             .bind(3, templateRegistered.rating)

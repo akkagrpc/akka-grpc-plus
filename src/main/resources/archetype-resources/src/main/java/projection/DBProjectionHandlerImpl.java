@@ -44,11 +44,11 @@ public class DBProjectionHandlerImpl extends R2dbcHandler<EventEnvelope<Event>> 
         Event event = envelope.event();
         if (event instanceof MovieRegistered) {
             MovieRegistered registered = (MovieRegistered) event;
-            logger.info("Movie with ID {} was created at {}", registered.${package}Id, registered.createdDateTime);
+            logger.info("Movie with ID {} was created at {}", registered.movieId, registered.createdDateTime);
             Statement stmt =
-                    session.createStatement("INSERT into ${package} (${package}id, title, description, rating, genre, createdby, creationdatetime, smstatus) " +
-                                    "VALUES (${symbol_dollar}1, ${symbol_dollar}2, ${symbol_dollar}3, ${symbol_dollar}4, ${symbol_dollar}5, ${symbol_dollar}6, ${symbol_dollar}7, ${symbol_dollar}8)")
-                            .bind(0, registered.${package}Id)
+                    session.createStatement("INSERT into movie (movieid, title, description, rating, genre, createdby, creationdatetime, smstatus) " +
+                                    "VALUES ($1, $2, $3, $4, $5, $6, $7, $8)")
+                            .bind(0, registered.movieId)
                             .bind(1, registered.title)
                             .bind(2, registered.description)
                             .bind(3, registered.rating)
@@ -79,7 +79,7 @@ public class DBProjectionHandlerImpl extends R2dbcHandler<EventEnvelope<Event>> 
     }
 
     private void persistToElasticSearch(MovieReport report) throws IOException {
-        IndexRequest indexRequest = new IndexRequest("ps_${package}s");
+        IndexRequest indexRequest = new IndexRequest("ps_movies");
         indexRequest.id(report.getMovieId());
         ESRecord esSecTempRecord = elasticSearchRestClient.convertToESRecord(report);
         indexRequest.source(new ObjectMapper().writeValueAsString(esSecTempRecord), XContentType.JSON);

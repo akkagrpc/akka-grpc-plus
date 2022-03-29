@@ -3,7 +3,7 @@
 #set( $symbol_escape = '\' )
 package ${package}.util;
 
-import ${groupId}.grpc.ValidateActiveDirectoryDetailsRequest;
+import com.akkagrpc.grpc.ValidateActiveDirectoryDetailsRequest;
 import ${package}.util.model.ADGroup;
 import ${package}.util.model.User;
 

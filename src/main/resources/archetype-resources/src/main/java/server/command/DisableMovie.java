@@ -13,13 +13,13 @@ import ${package}.server.reply.Confirmation;
 @Value
 @JsonDeserialize
 public class DisableMovie implements Command<Confirmation> {
-    private String ${package}Id;
+    private String movieId;
     private String disabledBy;
     public ActorRef<Confirmation> replyTo;
 
     @JsonCreator
-    public DisableMovie(String ${package}Id, String disabledBy, ActorRef<Confirmation> replyTo) {
-        this.${package}Id = Preconditions.checkNotNull(${package}Id, "Blank ${package}Id");
+    public DisableMovie(String movieId, String disabledBy, ActorRef<Confirmation> replyTo) {
+        this.movieId = Preconditions.checkNotNull(movieId, "Blank movieId");
         this.disabledBy = Preconditions.checkNotNull(disabledBy, "Blank disabledBy");
         this.replyTo = replyTo;
     }

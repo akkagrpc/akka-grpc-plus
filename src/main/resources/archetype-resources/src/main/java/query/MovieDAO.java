@@ -10,9 +10,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface MovieDAO {
-    Mono<Movie> getMovieById(String ${package}Id);
+    Mono<Movie> getMovieById(String movieId);
 
-    Source<Movie, NotUsed> getMovieByTemplateId(String ${package}Id);
+    Source<Movie, NotUsed> getMovieByTemplateId(String movieId);
 
     Flux<Movie> getMovies();
 }

@@ -10,7 +10,7 @@ import lombok.Value;
 @Value
 @JsonDeserialize
 public class Summary implements Reply {
-    String ${package}Id;
+    String movieId;
     String title;
     String description;
     Float rating;
@@ -22,8 +22,8 @@ public class Summary implements Reply {
     String smStatus;
 
     @JsonCreator
-    public Summary(String ${package}Id, String title, String description, Float rating, String genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
-        this.${package}Id = ${package}Id;
+    public Summary(String movieId, String title, String description, Float rating, String genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
+        this.movieId = movieId;
         this.title = title;
         this.description = description;
         this.rating = rating;

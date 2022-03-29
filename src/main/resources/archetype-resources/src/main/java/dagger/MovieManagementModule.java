@@ -3,7 +3,7 @@
 #set( $symbol_escape = '\' )
 package ${package}.dagger;
 
-import ${groupId}.grpc.MovieServicePowerApi;
+import com.akkagrpc.grpc.MovieServicePowerApi;
 import dagger.Binds;
 import dagger.Module;
 import ${package}.projection.*;

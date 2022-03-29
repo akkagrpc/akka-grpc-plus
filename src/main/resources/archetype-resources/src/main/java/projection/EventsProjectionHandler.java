@@ -41,7 +41,7 @@ public class EventsProjectionHandler extends R2dbcHandler<EventEnvelope<Event>> 
         String key = "";
         if (event instanceof MovieRegistered) {
             MovieRegistered templateRegistered = (MovieRegistered) event;
-            key = templateRegistered.${package}Id;
+            key = templateRegistered.movieId;
         }
         ProducerRecord<String, byte[]> producerRecord =
                 new ProducerRecord<>(topic, key, serialize(event));
@@ -64,10 +64,10 @@ public class EventsProjectionHandler extends R2dbcHandler<EventEnvelope<Event>> 
         if (event instanceof MovieRegistered) {
             MovieRegistered templateRegistered = (MovieRegistered) event;
             protoMessage =
-                    ${groupId}.grpc.MovieAdded.newBuilder()
+                    com.akkagrpc.grpc.MovieAdded.newBuilder()
                             .build()
                             .toByteString();
-            fullName = ${groupId}.grpc.MovieAdded.getDescriptor().getFullName();
+            fullName = com.akkagrpc.grpc.MovieAdded.getDescriptor().getFullName();
 
         } else {
             throw new IllegalArgumentException("Unknown event type: " + event.getClass());

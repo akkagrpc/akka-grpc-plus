@@ -7,7 +7,7 @@ import akka.actor.ActorSystem;
 import akka.discovery.Discovery;
 import akka.discovery.ServiceDiscovery;
 import akka.grpc.GrpcClientSettings;
-import ${groupId}.grpc.MovieServiceClient;
+import com.akkagrpc.grpc.MovieServiceClient;
 import com.typesafe.config.Config;
 import io.grpc.StatusRuntimeException;
 

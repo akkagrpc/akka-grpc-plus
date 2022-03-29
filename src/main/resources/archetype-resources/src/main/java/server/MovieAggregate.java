@@ -32,25 +32,25 @@ import java.util.Set;
 
 public class MovieAggregate extends EventSourcedBehaviorWithEnforcedReplies<Command, Event, Movie> {
 
-    public final String ${package}Id;
+    public final String movieId;
     public final String projectionTag;
     public static EntityTypeKey<Command> ENTITY_KEY = EntityTypeKey.create(Command.class, "MovieAggregate");
 
-    private MovieAggregate(String ${package}Id, String projectionTag) {
-        super(PersistenceId.of(ENTITY_KEY.name(), ${package}Id),
+    private MovieAggregate(String movieId, String projectionTag) {
+        super(PersistenceId.of(ENTITY_KEY.name(), movieId),
                 SupervisorStrategy.restartWithBackoff(Duration.ofMillis(200), Duration.ofSeconds(5), 0.1));
-        this.${package}Id = ${package}Id;
+        this.movieId = movieId;
         this.projectionTag = projectionTag;
     }
 
-    public static Behavior<Command> create(String ${package}Id, String projectionTag) {
+    public static Behavior<Command> create(String movieId, String projectionTag) {
         return Behaviors.setup(
-                ctx -> EventSourcedBehavior.start(new MovieAggregate(${package}Id, projectionTag), ctx));
+                ctx -> EventSourcedBehavior.start(new MovieAggregate(movieId, projectionTag), ctx));
     }
 
     public static final List<String> TAGS =
             Collections.unmodifiableList(
-                    Arrays.asList("${package}-0", "${package}-1", "${package}-2", "${package}-3", "${package}-4"));
+                    Arrays.asList("movie-0", "movie-1", "movie-2", "movie-3", "movie-4"));
 
     public static void init(ActorSystem<?> system) {
         ClusterSharding.get(system)
@@ -83,13 +83,13 @@ public class MovieAggregate extends EventSourcedBehaviorWithEnforcedReplies<Comm
     public EventHandler<Movie, Event> eventHandler() {
         return newEventHandlerBuilder()
                 .forAnyState()
-                .onEvent(MovieRegistered.class, (${package}, evt) -> new Movie(evt.getMovieId(),
+                .onEvent(MovieRegistered.class, (state, evt) -> new Movie(evt.getMovieId(),
                         evt.getTitle(), evt.getDescription(), evt.getRating(), evt.getGenre(),
                         evt.getCreatedBy(), null, evt.getCreatedDateTime(), null, "NEW"))
-                .onEvent(MovieDisabled.class, (${package}, evt) -> new Movie(evt.getMovieId(),
-                        ${package}.getTitle(), ${package}.getDescription(), ${package}.getRating(),
-                        ${package}.getGenre(), ${package}.getCreatedBy(), ${package}.getLastModifiedBy(),
-                        ${package}.getCreationDateTime(), ${package}.getLastModifiedDateTime(), "DISABLED"))
+                .onEvent(MovieDisabled.class, (state, evt) -> new Movie(evt.getMovieId(),
+                        state.getTitle(), state.getDescription(), state.getRating(),
+                        state.getGenre(), state.getCreatedBy(), state.getLastModifiedBy(),
+                        state.getCreationDateTime(), state.getLastModifiedDateTime(), "DISABLED"))
                 .build();
     }
 
@@ -113,7 +113,7 @@ public class MovieAggregate extends EventSourcedBehaviorWithEnforcedReplies<Comm
 
     private ReplyEffect<Event, Movie> onRegisterMovie(Movie secureTemplate, RegisterMovie cmd) {
         return Effect()
-                .persist(new MovieRegistered(${package}Id, cmd.getMovieDetails().getTitle(),
+                .persist(new MovieRegistered(movieId, cmd.getMovieDetails().getTitle(),
                         cmd.getMovieDetails().getDescription(),
                         cmd.getMovieDetails().getRating(),
                         cmd.getMovieDetails().getGenre(),
@@ -123,17 +123,17 @@ public class MovieAggregate extends EventSourcedBehaviorWithEnforcedReplies<Comm
 
     private ReplyEffect<Event, Movie> onDisableMovie(Movie secureTemplate, DisableMovie cmd) {
         return Effect()
-                .persist(new MovieDisabled(${package}Id,
+                .persist(new MovieDisabled(movieId,
                         cmd.getDisabledBy(), Instant.now().toString()))
                 .thenReply(cmd.replyTo, s -> new Accepted(toSummary(s)));
 
     }
 
-    private ReplyEffect<Event, Movie> onGet(Movie ${package}, GetMovie cmd) {
-        return Effect().reply(cmd.replyTo, toSummary(${package}));
+    private ReplyEffect<Event, Movie> onGet(Movie movie, GetMovie cmd) {
+        return Effect().reply(cmd.replyTo, toSummary(movie));
     }
 
-    private Summary toSummary(Movie ${package}) {
-        return new Summary(${package}.getMovieId(), ${package}.getTitle(), ${package}.getDescription(), ${package}.getRating(), ${package}.getGenre(), ${package}.getCreatedBy(), ${package}.getLastModifiedBy(), ${package}.getCreationDateTime(), ${package}.getLastModifiedDateTime(), ${package}.getSmStatus());
+    private Summary toSummary(Movie movie) {
+        return new Summary(movie.getMovieId(), movie.getTitle(), movie.getDescription(), movie.getRating(), movie.getGenre(), movie.getCreatedBy(), movie.getLastModifiedBy(), movie.getCreationDateTime(), movie.getLastModifiedDateTime(), movie.getSmStatus());
     }
 }

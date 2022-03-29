@@ -12,13 +12,13 @@ import lombok.Value;
 @JsonDeserialize
 public class MovieDisabled implements Event {
 
-    public String ${package}Id;
+    public String movieId;
     public String disabledBy;
     public String disabledDateTime;
 
     @JsonCreator
-    public MovieDisabled(String ${package}Id, String disabledBy, String disabledDateTime) {
-        this.${package}Id = Preconditions.checkNotNull(${package}Id, "${package}Id");
+    public MovieDisabled(String movieId, String disabledBy, String disabledDateTime) {
+        this.movieId = Preconditions.checkNotNull(movieId, "movieId");
         this.disabledBy = Preconditions.checkNotNull(disabledBy, "disabledBy");
         this.disabledDateTime = disabledDateTime;
     }

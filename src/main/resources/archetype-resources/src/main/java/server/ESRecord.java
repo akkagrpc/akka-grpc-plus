@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class ESRecord {
-    private String ${package}Id;
+    private String movieId;
     private String title;
     private String description;
     private Float rating;
