@@ -3,7 +3,9 @@
     xmlns="https://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <requiredProperties>
-    <requiredProperty key ="capitalize_artifactId"/>
+    <requiredProperty key ="capitalize_artifactId">
+      <defaultValue>${package.getClass().forName("org.apache.velocity.util.StringUtils").removeAndHump("$artifactId", "-")}</defaultValue>
+    </requiredProperty>
   </requiredProperties>
   <fileSets>
     <fileSet filtered="true" packaged="true" encoding="UTF-8">

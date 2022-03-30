@@ -20,13 +20,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class MovieDAOImpl implements MovieDAO {
+public class ${capitalize_artifactId}DAOImpl implements ${capitalize_artifactId}DAO {
 
     private final ConnectionFactory connectionFactory;
 
 
     @Inject
-    public MovieDAOImpl(Config config) {
+    public ${capitalize_artifactId}DAOImpl(Config config) {
 
         String driver = config.getString("secure-template-service.dao.driver");
         String host = config.getString("secure-template-service.dao.host");

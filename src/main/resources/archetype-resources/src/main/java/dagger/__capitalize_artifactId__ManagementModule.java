@@ -7,8 +7,8 @@ import com.akkagrpc.grpc.MovieServicePowerApi;
 import dagger.Binds;
 import dagger.Module;
 import ${package}.projection.*;
-import ${package}.query.MovieDAO;
-import ${package}.query.MovieDAOImpl;
+import ${package}.query.${capitalize_artifactId}DAO;
+import ${package}.query.${capitalize_artifactId}DAOImpl;
 import ${package}.query.QueryServer;
 import ${package}.query.QueryServerImpl;
 
@@ -28,7 +28,7 @@ public interface ${capitalize_artifactId}ManagementModule {
 
     @Binds
     @Singleton
-    MovieDAO bindMovieDAO(MovieDAOImpl dao);
+    ${capitalize_artifactId}DAO bind${capitalize_artifactId}DAO(${capitalize_artifactId}DAOImpl dao);
 
     @Binds
     @Singleton

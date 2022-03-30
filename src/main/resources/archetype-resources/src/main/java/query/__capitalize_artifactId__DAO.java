@@ -9,7 +9,7 @@ import ${package}.server.Movie;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface MovieDAO {
+public interface ${capitalize_artifactId}DAO {
     Mono<Movie> getMovieById(String movieId);
 
     Source<Movie, NotUsed> getMovieByTemplateId(String movieId);

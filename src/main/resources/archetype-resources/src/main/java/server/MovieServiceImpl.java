@@ -17,7 +17,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
-import ${package}.query.MovieDAO;
+import ${package}.query.${capitalize_artifactId}DAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ${package}.server.command.Command;
@@ -47,13 +47,13 @@ public final class MovieServiceImpl implements MovieServicePowerApi {
     private final Executor blockingJdbcExecutor;
     private final MeterRegistry meterRegistry;
     private final Counter movieCounter;
-    private final MovieDAO movieDAO;
+    private final ${capitalize_artifactId}DAO dao;
     private final ActiveDirectoryClient activeDirectoryClient;
 
     @Inject
-    public MovieServiceImpl(ActorSystem<?> system, MovieDAO movieDAO,
+    public MovieServiceImpl(ActorSystem<?> system, ${capitalize_artifactId}DAO dao,
                                      MicrometerClient micrometerClient, ActiveDirectoryClient activeDirectoryClient) {
-        this.movieDAO = movieDAO;
+        this.dao = dao;
         this.activeDirectoryClient = activeDirectoryClient;
         DispatcherSelector dispatcherSelector = DispatcherSelector.fromConfig("akka.persistence.r2dbc.journal.plugin-dispatcher");
         this.askTimeout = system.settings().config().getDuration("secure-template-service.ask-timeout");

@@ -7,10 +7,10 @@ import javax.inject.Inject;
 
 public class QueryServerImpl implements QueryServer {
 
-    MovieDAO dao;
+    ${capitalize_artifactId}DAO dao;
 
     @Inject
-    QueryServerImpl(MovieDAO dao){
+    QueryServerImpl(${capitalize_artifactId}DAO dao){
         this.dao = dao;
     }
 
