@@ -20,7 +20,7 @@ import ${package}.util.*;
 import javax.inject.Singleton;
 
 @Module
-public interface MovieManagementModule {
+public interface ${capitalize_artifactId}ManagementModule {
 
     @Binds
     @Singleton

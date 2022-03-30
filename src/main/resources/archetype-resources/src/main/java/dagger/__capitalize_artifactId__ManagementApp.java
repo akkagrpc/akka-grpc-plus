@@ -15,11 +15,11 @@ import ${package}.server.MovieAggregate;
 
 import javax.inject.Singleton;
 
-public class MovieManagementApp {
+public class ${capitalize_artifactId}ManagementApp {
 
     @Singleton
-    @Component(modules = {ActorSystemModule.class, MovieManagementModule.class})
-    public interface MovieApp {
+    @Component(modules = {ActorSystemModule.class, ${capitalize_artifactId}ManagementModule.class})
+    public interface ${capitalize_artifactId}App {
         ActorSystem<?> actorSystem();
 
         AkkaManagement akkaManagement();
@@ -36,13 +36,13 @@ public class MovieManagementApp {
     }
 
     public static void main(String[] args) {
-        MovieApp movieApp = DaggerMovieManagementApp_MovieApp.builder().build();
-        movieApp.akkaManagement().start();
-        movieApp.clusterBootstrap().start();
-        MovieAggregate.init(movieApp.actorSystem());
-        movieApp.dbProjection().startProjection();
-        movieApp.eventsProjection().startProjection();
-        movieApp.commandServer().startCommandServer();
-        movieApp.queryServer().startQueryServer();
+        ${capitalize_artifactId}App app = Dagger${capitalize_artifactId}ManagementApp_${capitalize_artifactId}App.builder().build();
+        app.akkaManagement().start();
+        app.clusterBootstrap().start();
+        MovieAggregate.init(app.actorSystem());
+        app.dbProjection().startProjection();
+        app.eventsProjection().startProjection();
+        app.commandServer().startCommandServer();
+        app.queryServer().startQueryServer();
     }
 }
