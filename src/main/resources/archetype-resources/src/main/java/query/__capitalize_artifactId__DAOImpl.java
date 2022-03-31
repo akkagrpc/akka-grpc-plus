@@ -28,12 +28,12 @@ public class ${capitalize_artifactId}DAOImpl implements ${capitalize_artifactId}
     @Inject
     public ${capitalize_artifactId}DAOImpl(Config config) {
 
-        String driver = config.getString("service.dao.driver");
-        String host = config.getString("service.dao.host");
-        int port = config.getInt("service.dao.port");
-        String database = config.getString("service.dao.database");
-        String user = config.getString("service.dao.user");
-        String password = config.getString("service.dao.password");
+        String driver = config.getString("${artifactId}.dao.driver");
+        String host = config.getString("${artifactId}.dao.host");
+        int port = config.getInt("${artifactId}.dao.port");
+        String database = config.getString("${artifactId}.dao.database");
+        String user = config.getString("${artifactId}.dao.user");
+        String password = config.getString("${artifactId}.dao.password");
 
         final ConnectionFactoryOptions options = ConnectionFactoryOptions.builder()
                 .option(ConnectionFactoryOptions.DRIVER, driver)

@@ -44,7 +44,7 @@ public class DBProjectionHandlerImpl extends R2dbcHandler<EventEnvelope<Event>> 
         Event event = envelope.event();
         if (event instanceof MovieRegistered) {
             MovieRegistered registered = (MovieRegistered) event;
-            logger.info("Movie with ID {} was created at {}", registered.movieId, registered.createdDateTime);
+            logger.info("${capitalize_artifactId} with ID {} was created at {}", registered.movieId, registered.createdDateTime);
             Statement stmt =
                     session.createStatement("INSERT into movie (movieid, title, description, rating, genre, createdby, creationdatetime, smstatus) " +
                                     "VALUES ($1, $2, $3, $4, $5, $6, $7, $8)")

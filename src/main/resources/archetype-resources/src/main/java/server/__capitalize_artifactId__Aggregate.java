@@ -50,7 +50,7 @@ public class ${capitalize_artifactId}Aggregate extends EventSourcedBehaviorWithE
 
     public static final List<String> TAGS =
             Collections.unmodifiableList(
-                    Arrays.asList("movie-0", "movie-1", "movie-2", "movie-3", "movie-4"));
+                    Arrays.asList("${artifactId}-0", "${artifactId}-1", "${artifactId}-2", "${artifactId}-3", "${artifactId}-4"));
 
     public static void init(ActorSystem<?> system) {
         ClusterSharding.get(system)
