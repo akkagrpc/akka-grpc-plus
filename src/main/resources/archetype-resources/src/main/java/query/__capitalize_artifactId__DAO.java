@@ -5,14 +5,14 @@ package ${package}.query;
 
 import akka.NotUsed;
 import akka.stream.javadsl.Source;
-import ${package}.server.Movie;
+import ${package}.server.${capitalize_artifactId};
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface ${capitalize_artifactId}DAO {
-    Mono<Movie> getMovieById(String movieId);
+    Mono<${capitalize_artifactId}> getMovieById(String movieId);
 
-    Source<Movie, NotUsed> getMovieByTemplateId(String movieId);
+    Source<${capitalize_artifactId}, NotUsed> getMovieByTemplateId(String movieId);
 
-    Flux<Movie> getMovies();
+    Flux<${capitalize_artifactId}> getMovies();
 }

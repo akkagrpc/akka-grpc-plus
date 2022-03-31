@@ -3,7 +3,7 @@
 #set( $symbol_escape = '\' )
 package ${package}.util;
 
-import ${package}.server.MovieReport;
+import ${package}.server.${capitalize_artifactId}Report;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -36,7 +36,7 @@ public class ElasticSearchRestClientImpl implements ElasticSearchRestClient {
     }
 
     @Override
-    public ESRecord convertToESRecord(MovieReport record) {
+    public ESRecord convertToESRecord(${capitalize_artifactId}Report record) {
         ESRecord esRecord = new ESRecord();
         esRecord.setMovieId(record.getMovieId());
         esRecord.setTitle(record.getTitle());

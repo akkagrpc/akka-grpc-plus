@@ -24,7 +24,7 @@ import io.r2dbc.spi.Statement;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ${package}.server.MovieAggregate;
+import ${package}.server.${capitalize_artifactId}Aggregate;
 import ${package}.server.event.Event;
 import ${package}.server.event.MovieRegistered;
 
@@ -94,7 +94,7 @@ public class DBProjectionImpl extends R2dbcHandler<EventEnvelope<Event>> impleme
         int minSlice = sliceRange.first();
         int maxSlice = sliceRange.second();
 
-        String entityType = MovieAggregate.ENTITY_KEY.name();
+        String entityType = ${capitalize_artifactId}Aggregate.ENTITY_KEY.name();
 
         SourceProvider<Offset, EventEnvelope<Event>> sourceProvider =
                 EventSourcedProvider.eventsBySlices(system, R2dbcReadJournal.Identifier(), entityType, minSlice, maxSlice);

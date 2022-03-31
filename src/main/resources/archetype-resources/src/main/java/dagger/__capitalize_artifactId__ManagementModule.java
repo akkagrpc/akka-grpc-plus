@@ -14,7 +14,7 @@ import ${package}.query.QueryServerImpl;
 
 import ${package}.server.CommandServer;
 import ${package}.server.CommandServerImpl;
-import ${package}.server.MovieServiceImpl;
+import ${package}.server.${capitalize_artifactId}ServiceImpl;
 import ${package}.util.*;
 
 import javax.inject.Singleton;
@@ -24,7 +24,7 @@ public interface ${capitalize_artifactId}ManagementModule {
 
     @Binds
     @Singleton
-    MovieServicePowerApi bindMovieServicePowerApi(MovieServiceImpl impl);
+    MovieServicePowerApi bindMovieServicePowerApi(${capitalize_artifactId}ServiceImpl impl);
 
     @Binds
     @Singleton

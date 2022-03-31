@@ -4,13 +4,13 @@
 package ${package}.util;
 
 
-import ${package}.server.Movie;
+import ${package}.server.${capitalize_artifactId};
 
-public final class MovieORM {
-    private MovieORM(){}
+public final class ${capitalize_artifactId}ORM {
+    private ${capitalize_artifactId}ORM(){}
 
-    public static Movie mapRowToMovie(io.r2dbc.spi.Row row){
-        return Movie.builder()
+    public static ${capitalize_artifactId} mapRowTo${capitalize_artifactId}(io.r2dbc.spi.Row row){
+        return ${capitalize_artifactId}.builder()
                 .movieId(row.get("movieid", String.class))
                 .title(row.get("title", String.class))
                 .description(row.get("description", String.class))

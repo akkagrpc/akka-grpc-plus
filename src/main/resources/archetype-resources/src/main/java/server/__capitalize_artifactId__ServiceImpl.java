@@ -40,8 +40,8 @@ import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
 @Singleton
-public final class MovieServiceImpl implements MovieServicePowerApi {
-    private final Logger logger = LoggerFactory.getLogger(MovieServiceImpl.class);
+public final class ${capitalize_artifactId}ServiceImpl implements MovieServicePowerApi {
+    private final Logger logger = LoggerFactory.getLogger(${capitalize_artifactId}ServiceImpl.class);
     private final Duration askTimeout;
     private final ClusterSharding clusterSharding;
     private final Executor blockingJdbcExecutor;
@@ -51,7 +51,7 @@ public final class MovieServiceImpl implements MovieServicePowerApi {
     private final ActiveDirectoryClient activeDirectoryClient;
 
     @Inject
-    public MovieServiceImpl(ActorSystem<?> system, ${capitalize_artifactId}DAO dao,
+    public ${capitalize_artifactId}ServiceImpl(ActorSystem<?> system, ${capitalize_artifactId}DAO dao,
                                      MicrometerClient micrometerClient, ActiveDirectoryClient activeDirectoryClient) {
         this.dao = dao;
         this.activeDirectoryClient = activeDirectoryClient;
@@ -65,7 +65,7 @@ public final class MovieServiceImpl implements MovieServicePowerApi {
     }
 
     private EntityRef<Command> entityRef(String movieId) {
-        return clusterSharding.entityRefFor(MovieAggregate.ENTITY_KEY, movieId);
+        return clusterSharding.entityRefFor(${capitalize_artifactId}Aggregate.ENTITY_KEY, movieId);
     }
 
     @Override

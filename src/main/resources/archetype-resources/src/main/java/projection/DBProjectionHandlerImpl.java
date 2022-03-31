@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.r2dbc.spi.Statement;
 import lombok.SneakyThrows;
 import ${package}.server.ESRecord;
-import ${package}.server.MovieReport;
+import ${package}.server.${capitalize_artifactId}Report;
 import ${package}.server.event.Event;
 import ${package}.server.event.MovieRegistered;
 import ${package}.util.ElasticSearchRestClient;
@@ -65,8 +65,8 @@ public class DBProjectionHandlerImpl extends R2dbcHandler<EventEnvelope<Event>> 
     }
 
     @Override
-    public MovieReport convertEventDetailsToMovieReport(MovieRegistered event) {
-        MovieReport report = new MovieReport();
+    public ${capitalize_artifactId}Report convertEventDetailsTo${capitalize_artifactId}Report(MovieRegistered event) {
+        ${capitalize_artifactId}Report report = new ${capitalize_artifactId}Report();
         report.setMovieId(event.getMovieId());
         report.setTitle(event.getTitle());
         report.setDescription(event.getDescription());
@@ -78,7 +78,7 @@ public class DBProjectionHandlerImpl extends R2dbcHandler<EventEnvelope<Event>> 
         return report;
     }
 
-    private void persistToElasticSearch(MovieReport report) throws IOException {
+    private void persistToElasticSearch(${capitalize_artifactId}Report report) throws IOException {
         IndexRequest indexRequest = new IndexRequest("ps_movies");
         indexRequest.id(report.getMovieId());
         ESRecord esSecTempRecord = elasticSearchRestClient.convertToESRecord(report);

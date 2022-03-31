@@ -30,13 +30,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-public class MovieAggregate extends EventSourcedBehaviorWithEnforcedReplies<Command, Event, Movie> {
+public class ${capitalize_artifactId}Aggregate extends EventSourcedBehaviorWithEnforcedReplies<Command, Event, ${capitalize_artifactId}> {
 
     public final String movieId;
     public final String projectionTag;
     public static EntityTypeKey<Command> ENTITY_KEY = EntityTypeKey.create(Command.class, "MovieAggregate");
 
-    private MovieAggregate(String movieId, String projectionTag) {
+    private ${capitalize_artifactId}Aggregate(String movieId, String projectionTag) {
         super(PersistenceId.of(ENTITY_KEY.name(), movieId),
                 SupervisorStrategy.restartWithBackoff(Duration.ofMillis(200), Duration.ofSeconds(5), 0.1));
         this.movieId = movieId;
@@ -45,7 +45,7 @@ public class MovieAggregate extends EventSourcedBehaviorWithEnforcedReplies<Comm
 
     public static Behavior<Command> create(String movieId, String projectionTag) {
         return Behaviors.setup(
-                ctx -> EventSourcedBehavior.start(new MovieAggregate(movieId, projectionTag), ctx));
+                ctx -> EventSourcedBehavior.start(new ${capitalize_artifactId}Aggregate(movieId, projectionTag), ctx));
     }
 
     public static final List<String> TAGS =
@@ -60,13 +60,13 @@ public class MovieAggregate extends EventSourcedBehaviorWithEnforcedReplies<Comm
                                 entityContext -> {
                                     int i = Math.abs(entityContext.getEntityId().hashCode() % TAGS.size());
                                     String selectedTag = TAGS.get(i);
-                                    return MovieAggregate.create(entityContext.getEntityId(), selectedTag);
+                                    return ${capitalize_artifactId}Aggregate.create(entityContext.getEntityId(), selectedTag);
                                 }));
     }
 
     @Override
-    public Movie emptyState() {
-        return Movie.EMPTY;
+    public ${capitalize_artifactId} emptyState() {
+        return ${capitalize_artifactId}.EMPTY;
     }
 
     @Override
@@ -80,13 +80,13 @@ public class MovieAggregate extends EventSourcedBehaviorWithEnforcedReplies<Comm
     }
 
     @Override
-    public EventHandler<Movie, Event> eventHandler() {
+    public EventHandler<${capitalize_artifactId}, Event> eventHandler() {
         return newEventHandlerBuilder()
                 .forAnyState()
-                .onEvent(MovieRegistered.class, (state, evt) -> new Movie(evt.getMovieId(),
+                .onEvent(MovieRegistered.class, (state, evt) -> new ${capitalize_artifactId}(evt.getMovieId(),
                         evt.getTitle(), evt.getDescription(), evt.getRating(), evt.getGenre(),
                         evt.getCreatedBy(), null, evt.getCreatedDateTime(), null, "NEW"))
-                .onEvent(MovieDisabled.class, (state, evt) -> new Movie(evt.getMovieId(),
+                .onEvent(MovieDisabled.class, (state, evt) -> new ${capitalize_artifactId}(evt.getMovieId(),
                         state.getTitle(), state.getDescription(), state.getRating(),
                         state.getGenre(), state.getCreatedBy(), state.getLastModifiedBy(),
                         state.getCreationDateTime(), state.getLastModifiedDateTime(), "DISABLED"))
@@ -94,16 +94,16 @@ public class MovieAggregate extends EventSourcedBehaviorWithEnforcedReplies<Comm
     }
 
     @Override
-    public CommandHandlerWithReply<Command, Event, Movie> commandHandler() {
-        CommandHandlerWithReplyBuilder<Command, Event, Movie> builder = newCommandHandlerWithReplyBuilder();
+    public CommandHandlerWithReply<Command, Event, ${capitalize_artifactId}> commandHandler() {
+        CommandHandlerWithReplyBuilder<Command, Event, ${capitalize_artifactId}> builder = newCommandHandlerWithReplyBuilder();
 
-        builder.forState(Movie::isEmpty)
+        builder.forState(${capitalize_artifactId}::isEmpty)
                 .onCommand(RegisterMovie.class, this::onRegisterMovie);
 
-        builder.forState(Movie::isNew)
+        builder.forState(${capitalize_artifactId}::isNew)
                 .onCommand(DisableMovie.class, this::onDisableMovie);
 
-        builder.forState(Movie::isDisabled)
+        builder.forState(${capitalize_artifactId}::isDisabled)
                 .onCommand(DisableMovie.class, cmd -> Effect().reply(cmd.replyTo, new Rejected("Cannot disable already disabled template")));
 
         builder.forAnyState().onCommand(GetMovie.class, this::onGet);
@@ -111,7 +111,7 @@ public class MovieAggregate extends EventSourcedBehaviorWithEnforcedReplies<Comm
         return builder.build();
     }
 
-    private ReplyEffect<Event, Movie> onRegisterMovie(Movie secureTemplate, RegisterMovie cmd) {
+    private ReplyEffect<Event, ${capitalize_artifactId}> onRegisterMovie(${capitalize_artifactId} secureTemplate, RegisterMovie cmd) {
         return Effect()
                 .persist(new MovieRegistered(movieId, cmd.getMovieDetails().getTitle(),
                         cmd.getMovieDetails().getDescription(),
@@ -121,7 +121,7 @@ public class MovieAggregate extends EventSourcedBehaviorWithEnforcedReplies<Comm
                 .thenReply(cmd.replyTo, s -> new Accepted(toSummary(s)));
     }
 
-    private ReplyEffect<Event, Movie> onDisableMovie(Movie secureTemplate, DisableMovie cmd) {
+    private ReplyEffect<Event, ${capitalize_artifactId}> onDisableMovie(${capitalize_artifactId} secureTemplate, DisableMovie cmd) {
         return Effect()
                 .persist(new MovieDisabled(movieId,
                         cmd.getDisabledBy(), Instant.now().toString()))
@@ -129,11 +129,11 @@ public class MovieAggregate extends EventSourcedBehaviorWithEnforcedReplies<Comm
 
     }
 
-    private ReplyEffect<Event, Movie> onGet(Movie movie, GetMovie cmd) {
+    private ReplyEffect<Event, ${capitalize_artifactId}> onGet(${capitalize_artifactId} movie, GetMovie cmd) {
         return Effect().reply(cmd.replyTo, toSummary(movie));
     }
 
-    private Summary toSummary(Movie movie) {
+    private Summary toSummary(${capitalize_artifactId} movie) {
         return new Summary(movie.getMovieId(), movie.getTitle(), movie.getDescription(), movie.getRating(), movie.getGenre(), movie.getCreatedBy(), movie.getLastModifiedBy(), movie.getCreationDateTime(), movie.getLastModifiedDateTime(), movie.getSmStatus());
     }
 }

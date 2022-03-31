@@ -6,7 +6,7 @@ package ${package}.server;
 import lombok.Data;
 
 @Data
-public class MovieReport {
+public class ${capitalize_artifactId}Report {
     private String movieId;
     private String title;
     private String description;

@@ -8,13 +8,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
 import lombok.Value;
 
-/**
- * A Secure Template.
- */
 @Value
 @JsonDeserialize
 @Builder
-public class Movie {
+public class ${capitalize_artifactId} {
     String movieId;
     String title;
     String description;
@@ -27,7 +24,7 @@ public class Movie {
     String smStatus;
 
     @JsonCreator
-    public Movie(String movieId, String title, String description, Float rating, String genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
+    public ${capitalize_artifactId}(String movieId, String title, String description, Float rating, String genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
         this.movieId = movieId;
         this.title = title;
         this.description = description;
@@ -40,7 +37,7 @@ public class Movie {
         this.smStatus = smStatus;
     }
 
-    public static Movie EMPTY = new Movie(null, null, null, null, null, null, null, null, null, "EMPTY");
+    public static ${capitalize_artifactId} EMPTY = new ${capitalize_artifactId}(null, null, null, null, null, null, null, null, null, "EMPTY");
 
     public boolean isEmpty() {
         return "EMPTY".equals(this.smStatus);

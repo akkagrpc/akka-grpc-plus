@@ -11,7 +11,7 @@ import ${package}.projection.DBProjection;
 import ${package}.projection.EventsProjection;
 import ${package}.query.QueryServer;
 import ${package}.server.CommandServer;
-import ${package}.server.MovieAggregate;
+import ${package}.server.${capitalize_artifactId}Aggregate;
 
 import javax.inject.Singleton;
 
@@ -39,7 +39,7 @@ public class ${capitalize_artifactId}ManagementApp {
         ${capitalize_artifactId}App app = Dagger${capitalize_artifactId}ManagementApp_${capitalize_artifactId}App.builder().build();
         app.akkaManagement().start();
         app.clusterBootstrap().start();
-        MovieAggregate.init(app.actorSystem());
+        ${capitalize_artifactId}Aggregate.init(app.actorSystem());
         app.dbProjection().startProjection();
         app.eventsProjection().startProjection();
         app.commandServer().startCommandServer();

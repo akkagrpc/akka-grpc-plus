@@ -8,14 +8,14 @@ import ${package}.server.CommandServer;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class MovieManagementDaggerTest {
+public class ${capitalize_artifactId}ManagementDaggerTest {
 
     @Test
     public void givenGeneratedComponent_whenBuildingSecureTemplateApp_thenDependenciesInjected() {
-        MovieManagementApp.MovieApp movieApp = DaggerMovieManagementApp_MovieApp.create();
+        ${capitalize_artifactId}ManagementApp.${capitalize_artifactId}App app = Dagger${capitalize_artifactId}ManagementApp_${capitalize_artifactId}App.create();
 
-        CommandServer injectedCommandServer = movieApp.commandServer();
-        ActorSystem<?> injectedActorSystem = movieApp.actorSystem();
+        CommandServer injectedCommandServer = app.commandServer();
+        ActorSystem<?> injectedActorSystem = app.actorSystem();
 
         Assert.assertNotNull(injectedCommandServer);
         Assert.assertNotNull(injectedActorSystem);
