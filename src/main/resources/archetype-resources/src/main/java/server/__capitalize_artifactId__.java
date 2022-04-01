@@ -2,6 +2,7 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 package ${package}.server;
+import com.akkagrpc.grpc.Genre;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -14,9 +15,9 @@ import lombok.Value;
 public class ${capitalize_artifactId} {
     String movieId;
     String title;
-    String description;
+    int releaseYear;
     Float rating;
-    String genre;
+    Genre genre;
     String createdBy;
     String lastModifiedBy;
     String creationDateTime;
@@ -24,10 +25,10 @@ public class ${capitalize_artifactId} {
     String smStatus;
 
     @JsonCreator
-    public ${capitalize_artifactId}(String movieId, String title, String description, Float rating, String genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
+    public ${capitalize_artifactId}(String movieId, String title, int releaseYear, Float rating, Genre genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
         this.movieId = movieId;
         this.title = title;
-        this.description = description;
+        this.releaseYear = releaseYear;
         this.rating = rating;
         this.genre = genre;
         this.createdBy = createdBy;
@@ -37,7 +38,7 @@ public class ${capitalize_artifactId} {
         this.smStatus = smStatus;
     }
 
-    public static ${capitalize_artifactId} EMPTY = new ${capitalize_artifactId}(null, null, null, null, null, null, null, null, null, "EMPTY");
+    public static ${capitalize_artifactId} EMPTY = new ${capitalize_artifactId}(null, null, 0, null, null, null, null, null, null, "EMPTY");
 
     public boolean isEmpty() {
         return "EMPTY".equals(this.smStatus);

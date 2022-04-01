@@ -2,6 +2,7 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 package ${package}.server;
+import com.akkagrpc.grpc.Genre;
 
 import lombok.Data;
 
@@ -9,9 +10,9 @@ import lombok.Data;
 public class ESRecord {
     private String movieId;
     private String title;
-    private String description;
+    private int releaseYear;
     private Float rating;
-    private String genre;
+    private Genre genre;
     private String createdDate;
     private String createdBy;
     private String lastModifiedDate;

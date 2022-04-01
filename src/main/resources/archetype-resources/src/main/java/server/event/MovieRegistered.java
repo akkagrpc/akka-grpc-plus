@@ -7,23 +7,24 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Preconditions;
 import lombok.Value;
+import com.akkagrpc.grpc.Genre;
 
 @Value
 @JsonDeserialize
 public class MovieRegistered implements Event {
     public String movieId;
     public String title;
-    public String description;
+    public int releaseYear;
     public Float rating;
-    public String genre;
+    public Genre genre;
     public String createdBy;
     public String createdDateTime;
 
     @JsonCreator
-    public MovieRegistered(String movieId, String title, String description, Float rating, String genre, String createdBy, String createdDateTime) {
+    public MovieRegistered(String movieId, String title, int releaseYear, Float rating, Genre genre, String createdBy, String createdDateTime) {
         this.movieId = movieId;
         this.title = title;
-        this.description = description;
+        this.releaseYear = releaseYear;
         this.rating = rating;
         this.genre = genre;
         this.createdBy = createdBy;

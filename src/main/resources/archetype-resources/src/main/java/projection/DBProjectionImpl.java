@@ -70,11 +70,11 @@ public class DBProjectionImpl extends R2dbcHandler<EventEnvelope<Event>> impleme
             MovieRegistered templateRegistered = (MovieRegistered) event;
             logger.info("Secure template with ID {} was created at {}", templateRegistered.movieId, templateRegistered.createdDateTime);
             Statement stmt =
-                    session.createStatement("INSERT into movie (movieid, title, description, rating, genre, createdby, creationdatetime, smstatus) " +
+                    session.createStatement("INSERT into movie (movieid, title, releaseyear, rating, genre, createdby, creationdatetime, smstatus) " +
                                     "VALUES ($1, $2, $3, $4, $5, $6, $7, $8)")
                             .bind(0, templateRegistered.movieId)
                             .bind(1, templateRegistered.title)
-                            .bind(2, templateRegistered.description)
+                            .bind(2, templateRegistered.releaseYear)
                             .bind(3, templateRegistered.rating)
                             .bind(4, templateRegistered.genre)
                             .bind(5, templateRegistered.createdBy)
@@ -100,7 +100,7 @@ public class DBProjectionImpl extends R2dbcHandler<EventEnvelope<Event>> impleme
                 EventSourcedProvider.eventsBySlices(system, R2dbcReadJournal.Identifier(), entityType, minSlice, maxSlice);
 
         ProjectionId projectionId =
-                ProjectionId.of("SecureTemplates", "templates-" + minSlice + "-" + maxSlice);
+                ProjectionId.of("${capitalize_artifactId}", "${artifactId}-" + minSlice + "-" + maxSlice);
 
         Optional<R2dbcProjectionSettings> settings = Optional.empty();
 

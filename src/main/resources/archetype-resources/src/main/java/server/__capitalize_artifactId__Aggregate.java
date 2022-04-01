@@ -84,10 +84,10 @@ public class ${capitalize_artifactId}Aggregate extends EventSourcedBehaviorWithE
         return newEventHandlerBuilder()
                 .forAnyState()
                 .onEvent(MovieRegistered.class, (state, evt) -> new ${capitalize_artifactId}(evt.getMovieId(),
-                        evt.getTitle(), evt.getDescription(), evt.getRating(), evt.getGenre(),
+                        evt.getTitle(), evt.getReleaseYear(), evt.getRating(), evt.getGenre(),
                         evt.getCreatedBy(), null, evt.getCreatedDateTime(), null, "NEW"))
                 .onEvent(MovieDisabled.class, (state, evt) -> new ${capitalize_artifactId}(evt.getMovieId(),
-                        state.getTitle(), state.getDescription(), state.getRating(),
+                        state.getTitle(), state.getReleaseYear(), state.getRating(),
                         state.getGenre(), state.getCreatedBy(), state.getLastModifiedBy(),
                         state.getCreationDateTime(), state.getLastModifiedDateTime(), "DISABLED"))
                 .build();
@@ -114,7 +114,7 @@ public class ${capitalize_artifactId}Aggregate extends EventSourcedBehaviorWithE
     private ReplyEffect<Event, ${capitalize_artifactId}> onRegisterMovie(${capitalize_artifactId} secureTemplate, RegisterMovie cmd) {
         return Effect()
                 .persist(new MovieRegistered(movieId, cmd.getMovieDetails().getTitle(),
-                        cmd.getMovieDetails().getDescription(),
+                        cmd.getMovieDetails().getReleaseYear(),
                         cmd.getMovieDetails().getRating(),
                         cmd.getMovieDetails().getGenre(),
                         cmd.getCreatedBy(), Instant.now().toString()))
@@ -134,6 +134,6 @@ public class ${capitalize_artifactId}Aggregate extends EventSourcedBehaviorWithE
     }
 
     private Summary toSummary(${capitalize_artifactId} movie) {
-        return new Summary(movie.getMovieId(), movie.getTitle(), movie.getDescription(), movie.getRating(), movie.getGenre(), movie.getCreatedBy(), movie.getLastModifiedBy(), movie.getCreationDateTime(), movie.getLastModifiedDateTime(), movie.getSmStatus());
+        return new Summary(movie.getMovieId(), movie.getTitle(), movie.getReleaseYear(), movie.getRating(), movie.getGenre(), movie.getCreatedBy(), movie.getLastModifiedBy(), movie.getCreationDateTime(), movie.getLastModifiedDateTime(), movie.getSmStatus());
     }
 }

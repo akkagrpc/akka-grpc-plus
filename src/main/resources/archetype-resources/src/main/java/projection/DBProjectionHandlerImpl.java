@@ -46,11 +46,11 @@ public class DBProjectionHandlerImpl extends R2dbcHandler<EventEnvelope<Event>> 
             MovieRegistered registered = (MovieRegistered) event;
             logger.info("${capitalize_artifactId} with ID {} was created at {}", registered.movieId, registered.createdDateTime);
             Statement stmt =
-                    session.createStatement("INSERT into movie (movieid, title, description, rating, genre, createdby, creationdatetime, smstatus) " +
+                    session.createStatement("INSERT into movie (movieid, title, releaseyear, rating, genre, createdby, creationdatetime, smstatus) " +
                                     "VALUES ($1, $2, $3, $4, $5, $6, $7, $8)")
                             .bind(0, registered.movieId)
                             .bind(1, registered.title)
-                            .bind(2, registered.description)
+                            .bind(2, registered.releaseYear)
                             .bind(3, registered.rating)
                             .bind(4, registered.genre)
                             .bind(5, registered.createdBy)
@@ -69,7 +69,7 @@ public class DBProjectionHandlerImpl extends R2dbcHandler<EventEnvelope<Event>> 
         ${capitalize_artifactId}Report report = new ${capitalize_artifactId}Report();
         report.setMovieId(event.getMovieId());
         report.setTitle(event.getTitle());
-        report.setDescription(event.getDescription());
+        report.setReleaseYear(event.getReleaseYear());
         report.setRating(event.getRating());
         report.setGenre(event.getGenre());
         report.setCreatedBy(event.getCreatedBy());

@@ -40,7 +40,7 @@ public class ElasticSearchRestClientImpl implements ElasticSearchRestClient {
         ESRecord esRecord = new ESRecord();
         esRecord.setMovieId(record.getMovieId());
         esRecord.setTitle(record.getTitle());
-        esRecord.setDescription(record.getDescription());
+        esRecord.setReleaseYear(record.getReleaseYear());
         esRecord.setRating(record.getRating());
         esRecord.setGenre(record.getGenre());
         esRecord.setCreatedBy(record.getCreatedBy());

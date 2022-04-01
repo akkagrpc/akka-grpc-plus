@@ -2,6 +2,7 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 package ${package}.server.reply;
+import com.akkagrpc.grpc.Genre;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -12,9 +13,9 @@ import lombok.Value;
 public class Summary implements Reply {
     String movieId;
     String title;
-    String description;
+    int releaseYear;
     Float rating;
-    String genre;
+    Genre genre;
     String createdBy;
     String lastModifiedBy;
     String creationDateTime;
@@ -22,10 +23,10 @@ public class Summary implements Reply {
     String smStatus;
 
     @JsonCreator
-    public Summary(String movieId, String title, String description, Float rating, String genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
+    public Summary(String movieId, String title, int releaseYear, Float rating, Genre genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
         this.movieId = movieId;
         this.title = title;
-        this.description = description;
+        this.releaseYear = releaseYear;
         this.rating = rating;
         this.genre = genre;
         this.createdBy = createdBy;

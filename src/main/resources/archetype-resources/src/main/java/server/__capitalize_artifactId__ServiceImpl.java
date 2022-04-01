@@ -83,6 +83,11 @@ public final class ${capitalize_artifactId}ServiceImpl implements MovieServicePo
         return null;
     }
 
+    @Override
+    public CompletionStage<RegisterMovieResponse> disableMovie(RegisterMovieRequest in,Metadata metadata){
+        return null;
+    }
+
     private Accepted handleConfirmation(Confirmation confirmation) {
         if (confirmation instanceof Accepted) {
             return (Accepted) confirmation;
