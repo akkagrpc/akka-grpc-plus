@@ -85,7 +85,7 @@ service MovieService {
       body: "*"
     };
   };
-  rpc DisableMovie (RegisterMovieRequest) returns (RegisterMovieResponse) {
+  rpc DisableMovie (DisableMovieRequest) returns (DisableMovieResponse) {
     option(google.api.http) = {
       delete: "/movies/{movieId}"
     };

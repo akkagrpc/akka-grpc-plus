@@ -4,6 +4,7 @@
 package ${package}.server;
 
 import akka.NotUsed;
+import akka.Done;
 import akka.actor.typed.ActorSystem;
 import akka.actor.typed.DispatcherSelector;
 import akka.cluster.sharding.typed.javadsl.ClusterSharding;
@@ -18,6 +19,10 @@ import io.jsonwebtoken.Jws;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import ${package}.query.${capitalize_artifactId}DAO;
+import ${package}.server.command.DisableMovie;
+import ${package}.server.command.GetMovie;
+import ${package}.server.command.RegisterMovie;
+import ${package}.server.reply.Summary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ${package}.server.command.Command;
@@ -35,9 +40,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
+import reactor.core.publisher.Flux;
 
 @Singleton
 public final class ${capitalize_artifactId}ServiceImpl implements MovieServicePowerApi {
@@ -70,22 +77,58 @@ public final class ${capitalize_artifactId}ServiceImpl implements MovieServicePo
 
     @Override
     public CompletionStage<GetMovieResponse> getMovie(GetMovieRequest in, Metadata metadata) {
-        return null;
+        return entityRef(in.getMovieId())
+        .<Summary>ask(replyTo -> new GetMovie(in.getMovieId(), replyTo), askTimeout)
+        .thenApply(summary -> GetMovieResponse.newBuilder()
+        .setMovie(Movie.newBuilder()
+        .setMovieId(summary.getMovieId())
+        .setTitle(summary.getTitle())
+        .setRating(summary.getRating())
+        .setReleaseYear(summary.getReleaseYear())
+        .setGenre(summary.getGenre())
+        .build())
+        .build());
     }
 
     @Override
     public Source<GetMoviesResponse, NotUsed> getMovies(Empty in, Metadata metadata) {
-        return null;
+        Flux<${package}.server.${capitalize_artifactId}> movies = dao.getMovies();
+        return Source.from(movies.toIterable())
+        .map(movie -> {
+        return GetMoviesResponse.newBuilder()
+        .setMovie(Movie.newBuilder()
+        .setMovieId(movie.getMovieId())
+        .setTitle(movie.getTitle())
+        .setRating(movie.getRating())
+        .setReleaseYear(movie.getReleaseYear())
+        .setGenre(movie.getGenre())
+        .build())
+        .build();
+        });
     }
 
     @Override
     public CompletionStage<RegisterMovieResponse> registerMovie(RegisterMovieRequest in, Metadata metadata) {
-        return null;
+        movieCounter.increment(1.0);
+        String templateId = UUID.randomUUID().toString();
+        return entityRef(templateId)
+        .<Confirmation>ask(replyTo ->
+        new RegisterMovie(in, "Anonymous", replyTo), askTimeout)
+        .thenApply(this::handleConfirmation)
+        .thenApply(summary -> RegisterMovieResponse.newBuilder()
+        .setMovieId(summary.getSummary().getMovieId())
+        .build());
     }
 
     @Override
-    public CompletionStage<RegisterMovieResponse> disableMovie(RegisterMovieRequest in,Metadata metadata){
-        return null;
+    public CompletionStage<DisableMovieResponse> disableMovie(DisableMovieRequest in,Metadata metadata){
+        return entityRef(in.getMovieId())
+        .<Confirmation>ask(replyTo ->
+        new DisableMovie(in.getMovieId(), "Anonymous", replyTo), askTimeout)
+        .thenApply(this::handleConfirmation)
+        .thenApply(accepted -> DisableMovieResponse.newBuilder()
+        .setResponse(Done.getInstance().toString())
+        .build());
     }
 
     private Accepted handleConfirmation(Confirmation confirmation) {
