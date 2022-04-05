@@ -20,7 +20,7 @@ import akka.projection.eventsourced.javadsl.EventSourcedProvider;
 import akka.projection.javadsl.SourceProvider;
 import akka.projection.r2dbc.R2dbcProjectionSettings;
 import akka.projection.r2dbc.javadsl.R2dbcProjection;
-import ${package}.server.${capitalize_artifactId}Aggregate;
+import ${package}.server.${first_word_of_artifactId}Aggregate;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import ${package}.server.event.Event;
@@ -64,7 +64,7 @@ public final class EventsProjectionImpl implements EventsProjection {
         int minSlice = sliceRange.first();
         int maxSlice = sliceRange.second();
 
-        String entityType = ${capitalize_artifactId}Aggregate.ENTITY_KEY.name();
+        String entityType = ${first_word_of_artifactId}Aggregate.ENTITY_KEY.name();
 
         SourceProvider<Offset, EventEnvelope<Event>> sourceProvider =
                 EventSourcedProvider.eventsBySlices(system, R2dbcReadJournal.Identifier(), entityType, minSlice, maxSlice);

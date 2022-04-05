@@ -3,32 +3,32 @@
 #set( $symbol_escape = '\' )
 package ${package}.dagger;
 
-import com.akkagrpc.grpc.MovieServicePowerApi;
+import com.akkagrpc.grpc.${first_word_of_artifactId}ServicePowerApi;
 import dagger.Binds;
 import dagger.Module;
 import ${package}.projection.*;
-import ${package}.query.${capitalize_artifactId}DAO;
-import ${package}.query.${capitalize_artifactId}DAOImpl;
+import ${package}.query.${first_word_of_artifactId}DAO;
+import ${package}.query.${first_word_of_artifactId}DAOImpl;
 import ${package}.query.QueryServer;
 import ${package}.query.QueryServerImpl;
 
 import ${package}.server.CommandServer;
 import ${package}.server.CommandServerImpl;
-import ${package}.server.${capitalize_artifactId}ServiceImpl;
+import ${package}.server.${first_word_of_artifactId}ServiceImpl;
 import ${package}.util.*;
 
 import javax.inject.Singleton;
 
 @Module
-public interface ${capitalize_artifactId}ManagementModule {
+public interface ${first_word_of_artifactId}ManagementModule {
 
     @Binds
     @Singleton
-    MovieServicePowerApi bindMovieServicePowerApi(${capitalize_artifactId}ServiceImpl impl);
+    ${first_word_of_artifactId}ServicePowerApi bind${first_word_of_artifactId}ServicePowerApi(${first_word_of_artifactId}ServiceImpl impl);
 
     @Binds
     @Singleton
-    ${capitalize_artifactId}DAO bind${capitalize_artifactId}DAO(${capitalize_artifactId}DAOImpl dao);
+    ${first_word_of_artifactId}DAO bind${first_word_of_artifactId}DAO(${first_word_of_artifactId}DAOImpl dao);
 
     @Binds
     @Singleton

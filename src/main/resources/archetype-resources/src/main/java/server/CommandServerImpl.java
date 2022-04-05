@@ -19,9 +19,9 @@ import akka.http.javadsl.model.MediaTypes;
 import akka.http.javadsl.model.headers.RawHeader;
 import akka.http.javadsl.server.Route;
 import akka.japi.function.Function;
-import com.akkagrpc.grpc.MovieService;
-import com.akkagrpc.grpc.MovieServicePowerApi;
-import com.akkagrpc.grpc.MovieServicePowerApiHandlerFactory;
+import com.akkagrpc.grpc.${first_word_of_artifactId}Service;
+import com.akkagrpc.grpc.${first_word_of_artifactId}ServicePowerApi;
+import com.akkagrpc.grpc.${first_word_of_artifactId}ServicePowerApiHandlerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -44,10 +44,10 @@ import static akka.http.javadsl.server.Directives.*;
 @Singleton
 public class CommandServerImpl implements CommandServer {
     ActorSystem<?> system;
-    MovieServicePowerApi grpcService;
+    ${first_word_of_artifactId}ServicePowerApi grpcService;
 
     @Inject
-    public CommandServerImpl(ActorSystem<?> system, MovieServicePowerApi grpcService) {
+    public CommandServerImpl(ActorSystem<?> system, ${first_word_of_artifactId}ServicePowerApi grpcService) {
         this.system = system;
         this.grpcService = grpcService;
     }
@@ -60,8 +60,8 @@ public class CommandServerImpl implements CommandServer {
         int dashboardPort = memberPort(Cluster.get(system).selfMember());
 
         Function<HttpRequest, CompletionStage<HttpResponse>> service =
-                ServiceHandler.concatOrNotFound(MovieServicePowerApiHandlerFactory.create(grpcService, system),
-                        ServerReflection.create(Collections.singletonList(MovieService.description), system));
+                ServiceHandler.concatOrNotFound(${first_word_of_artifactId}ServicePowerApiHandlerFactory.create(grpcService, system),
+                        ServerReflection.create(Collections.singletonList(${first_word_of_artifactId}Service.description), system));
 
         CompletionStage<ServerBinding> bound = Http.get(system).newServerAt(host, port)
                 .bind(service);

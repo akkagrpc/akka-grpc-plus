@@ -11,8 +11,8 @@ import com.akkagrpc.grpc.Genre;
 
 @Value
 @JsonDeserialize
-public class MovieRegistered implements Event {
-    public String movieId;
+public class ${first_word_of_artifactId}Registered implements Event {
+    public String ${package}Id;
     public String title;
     public int releaseYear;
     public Float rating;
@@ -21,8 +21,8 @@ public class MovieRegistered implements Event {
     public String createdDateTime;
 
     @JsonCreator
-    public MovieRegistered(String movieId, String title, int releaseYear, Float rating, Genre genre, String createdBy, String createdDateTime) {
-        this.movieId = movieId;
+    public ${first_word_of_artifactId}Registered(String ${package}Id, String title, int releaseYear, Float rating, Genre genre, String createdBy, String createdDateTime) {
+        this.${package}Id = ${package}Id;
         this.title = title;
         this.releaseYear = releaseYear;
         this.rating = rating;

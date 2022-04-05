@@ -4,12 +4,12 @@
 package ${package}.util;
 
 import ${package}.server.ESRecord;
-import ${package}.server.${capitalize_artifactId}Report;
+import ${package}.server.${first_word_of_artifactId}Report;
 import org.elasticsearch.client.RestHighLevelClient;
 
 public interface ElasticSearchRestClient {
 
-    ESRecord convertToESRecord(${capitalize_artifactId}Report record);
+    ESRecord convertToESRecord(${first_word_of_artifactId}Report record);
 
     RestHighLevelClient getElasticSearchRestClient(boolean esAuthenticationEnabled);
 }

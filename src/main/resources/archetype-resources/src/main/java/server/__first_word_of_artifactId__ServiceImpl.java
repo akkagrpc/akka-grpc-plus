@@ -18,10 +18,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
-import ${package}.query.${capitalize_artifactId}DAO;
-import ${package}.server.command.DisableMovie;
-import ${package}.server.command.GetMovie;
-import ${package}.server.command.RegisterMovie;
+import ${package}.query.${first_word_of_artifactId}DAO;
+import ${package}.server.command.Disable${first_word_of_artifactId};
+import ${package}.server.command.Get${first_word_of_artifactId};
+import ${package}.server.command.Register${first_word_of_artifactId};
 import ${package}.server.reply.Summary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,87 +47,87 @@ import java.util.stream.Collectors;
 import reactor.core.publisher.Flux;
 
 @Singleton
-public final class ${capitalize_artifactId}ServiceImpl implements MovieServicePowerApi {
-    private final Logger logger = LoggerFactory.getLogger(${capitalize_artifactId}ServiceImpl.class);
+public final class ${first_word_of_artifactId}ServiceImpl implements ${first_word_of_artifactId}ServicePowerApi {
+    private final Logger logger = LoggerFactory.getLogger(${first_word_of_artifactId}ServiceImpl.class);
     private final Duration askTimeout;
     private final ClusterSharding clusterSharding;
     private final Executor blockingJdbcExecutor;
     private final MeterRegistry meterRegistry;
-    private final Counter movieCounter;
-    private final ${capitalize_artifactId}DAO dao;
+    private final Counter ${package}Counter;
+    private final ${first_word_of_artifactId}DAO dao;
     private final ActiveDirectoryClient activeDirectoryClient;
 
     @Inject
-    public ${capitalize_artifactId}ServiceImpl(ActorSystem<?> system, ${capitalize_artifactId}DAO dao,
+    public ${first_word_of_artifactId}ServiceImpl(ActorSystem<?> system, ${first_word_of_artifactId}DAO dao,
                                      MicrometerClient micrometerClient, ActiveDirectoryClient activeDirectoryClient) {
         this.dao = dao;
         this.activeDirectoryClient = activeDirectoryClient;
         DispatcherSelector dispatcherSelector = DispatcherSelector.fromConfig("akka.persistence.r2dbc.journal.plugin-dispatcher");
-        this.askTimeout = system.settings().config().getDuration("secure-template-service.ask-timeout");
+        this.askTimeout = system.settings().config().getDuration("${artifactId}.ask-timeout");
         this.clusterSharding = ClusterSharding.get(system);
         this.blockingJdbcExecutor = system.dispatchers().lookup(dispatcherSelector);
         this.meterRegistry = micrometerClient.ixMonitoringSystem();
-        this.movieCounter = this.meterRegistry.counter("movie", "genre");
+        this.${package}Counter = this.meterRegistry.counter("${package}", "genre");
 
     }
 
-    private EntityRef<Command> entityRef(String movieId) {
-        return clusterSharding.entityRefFor(${capitalize_artifactId}Aggregate.ENTITY_KEY, movieId);
+    private EntityRef<Command> entityRef(String ${package}Id) {
+        return clusterSharding.entityRefFor(${first_word_of_artifactId}Aggregate.ENTITY_KEY, ${package}Id);
     }
 
     @Override
-    public CompletionStage<GetMovieResponse> getMovie(GetMovieRequest in, Metadata metadata) {
-        return entityRef(in.getMovieId())
-        .<Summary>ask(replyTo -> new GetMovie(in.getMovieId(), replyTo), askTimeout)
-        .thenApply(summary -> GetMovieResponse.newBuilder()
-        .setMovie(Movie.newBuilder()
-        .setMovieId(summary.getMovieId())
-        .setTitle(summary.getTitle())
-        .setRating(summary.getRating())
-        .setReleaseYear(summary.getReleaseYear())
-        .setGenre(summary.getGenre())
-        .build())
+    public CompletionStage<Get${first_word_of_artifactId}Response> get${first_word_of_artifactId}(Get${first_word_of_artifactId}Request in, Metadata metadata) {
+        return entityRef(in.get${first_word_of_artifactId}Id())
+        .<Summary>ask(replyTo -> new Get${first_word_of_artifactId}(in.get${first_word_of_artifactId}Id(), replyTo), askTimeout)
+        .thenApply(summary -> Get${first_word_of_artifactId}Response.newBuilder()
+            .set${first_word_of_artifactId}(com.akkagrpc.grpc.${first_word_of_artifactId}.newBuilder()
+            .set${first_word_of_artifactId}Id(summary.get${first_word_of_artifactId}Id())
+            .setTitle(summary.getTitle())
+            .setRating(summary.getRating())
+            .setReleaseYear(summary.getReleaseYear())
+            .setGenre(summary.getGenre())
+            .build())
         .build());
     }
 
     @Override
-    public Source<GetMoviesResponse, NotUsed> getMovies(Empty in, Metadata metadata) {
-        Flux<${package}.server.${capitalize_artifactId}> movies = dao.getMovies();
-        return Source.from(movies.toIterable())
-        .map(movie -> {
-        return GetMoviesResponse.newBuilder()
-        .setMovie(Movie.newBuilder()
-        .setMovieId(movie.getMovieId())
-        .setTitle(movie.getTitle())
-        .setRating(movie.getRating())
-        .setReleaseYear(movie.getReleaseYear())
-        .setGenre(movie.getGenre())
-        .build())
+    public Source<Get${first_word_of_artifactId}sResponse, NotUsed> get${first_word_of_artifactId}s(Empty in, Metadata metadata) {
+        Flux<${package}.server.${first_word_of_artifactId}> ${package}s = dao.get${first_word_of_artifactId}s();
+        return Source.from(${package}s.toIterable())
+        .map(${package} -> {
+        return Get${first_word_of_artifactId}sResponse.newBuilder()
+            .set${first_word_of_artifactId}(com.akkagrpc.grpc.${first_word_of_artifactId}.newBuilder()
+            .set${first_word_of_artifactId}Id(${package}.get${first_word_of_artifactId}Id())
+            .setTitle(${package}.getTitle())
+            .setRating(${package}.getRating())
+            .setReleaseYear(${package}.getReleaseYear())
+            .setGenre(${package}.getGenre())
+            .build())
         .build();
         });
     }
 
     @Override
-    public CompletionStage<RegisterMovieResponse> registerMovie(RegisterMovieRequest in, Metadata metadata) {
-        movieCounter.increment(1.0);
+    public CompletionStage<Register${first_word_of_artifactId}Response> register${first_word_of_artifactId}(Register${first_word_of_artifactId}Request in, Metadata metadata) {
+        ${package}Counter.increment(1.0);
         String templateId = UUID.randomUUID().toString();
         return entityRef(templateId)
         .<Confirmation>ask(replyTo ->
-        new RegisterMovie(in, "Anonymous", replyTo), askTimeout)
+        new Register${first_word_of_artifactId}(in, "Anonymous", replyTo), askTimeout)
         .thenApply(this::handleConfirmation)
-        .thenApply(summary -> RegisterMovieResponse.newBuilder()
-        .setMovieId(summary.getSummary().getMovieId())
+        .thenApply(summary -> Register${first_word_of_artifactId}Response.newBuilder()
+            .set${first_word_of_artifactId}Id(summary.getSummary().get${first_word_of_artifactId}Id())
         .build());
     }
 
     @Override
-    public CompletionStage<DisableMovieResponse> disableMovie(DisableMovieRequest in,Metadata metadata){
-        return entityRef(in.getMovieId())
+    public CompletionStage<Disable${first_word_of_artifactId}Response> disable${first_word_of_artifactId}(Disable${first_word_of_artifactId}Request in,Metadata metadata){
+        return entityRef(in.get${first_word_of_artifactId}Id())
         .<Confirmation>ask(replyTo ->
-        new DisableMovie(in.getMovieId(), "Anonymous", replyTo), askTimeout)
+        new Disable${first_word_of_artifactId}(in.get${first_word_of_artifactId}Id(), "Anonymous", replyTo), askTimeout)
         .thenApply(this::handleConfirmation)
-        .thenApply(accepted -> DisableMovieResponse.newBuilder()
-        .setResponse(Done.getInstance().toString())
+        .thenApply(accepted -> Disable${first_word_of_artifactId}Response.newBuilder()
+            .setResponse(Done.getInstance().toString())
         .build());
     }
 

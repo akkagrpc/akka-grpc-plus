@@ -7,8 +7,8 @@ import com.akkagrpc.grpc.Genre;
 import lombok.Data;
 
 @Data
-public class ${capitalize_artifactId}Report {
-    private String movieId;
+public class ${first_word_of_artifactId}Report {
+    private String ${package}Id;
     private String title;
     private int releaseYear;
     private Float rating;

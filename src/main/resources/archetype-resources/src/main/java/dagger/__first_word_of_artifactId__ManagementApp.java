@@ -11,15 +11,15 @@ import ${package}.projection.DBProjection;
 import ${package}.projection.EventsProjection;
 import ${package}.query.QueryServer;
 import ${package}.server.CommandServer;
-import ${package}.server.${capitalize_artifactId}Aggregate;
+import ${package}.server.${first_word_of_artifactId}Aggregate;
 
 import javax.inject.Singleton;
 
-public class ${capitalize_artifactId}ManagementApp {
+public class ${first_word_of_artifactId}ManagementApp {
 
     @Singleton
-    @Component(modules = {ActorSystemModule.class, ${capitalize_artifactId}ManagementModule.class})
-    public interface ${capitalize_artifactId}App {
+    @Component(modules = {ActorSystemModule.class, ${first_word_of_artifactId}ManagementModule.class})
+    public interface ${first_word_of_artifactId}App {
         ActorSystem<?> actorSystem();
 
         AkkaManagement akkaManagement();
@@ -36,10 +36,10 @@ public class ${capitalize_artifactId}ManagementApp {
     }
 
     public static void main(String[] args) {
-        ${capitalize_artifactId}App app = Dagger${capitalize_artifactId}ManagementApp_${capitalize_artifactId}App.builder().build();
+        ${first_word_of_artifactId}App app = Dagger${first_word_of_artifactId}ManagementApp_${first_word_of_artifactId}App.builder().build();
         app.akkaManagement().start();
         app.clusterBootstrap().start();
-        ${capitalize_artifactId}Aggregate.init(app.actorSystem());
+        ${first_word_of_artifactId}Aggregate.init(app.actorSystem());
         app.dbProjection().startProjection();
         app.eventsProjection().startProjection();
         app.commandServer().startCommandServer();

@@ -12,7 +12,7 @@ import akka.projection.r2dbc.javadsl.R2dbcSession;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import lombok.SneakyThrows;
-import ${package}.server.event.MovieRegistered;
+import ${package}.server.event.${first_word_of_artifactId}Registered;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +39,9 @@ public class EventsProjectionHandler extends R2dbcHandler<EventEnvelope<Event>> 
         // using the cartId as the key and `DefaultPartitioner` will select partition based on the key
         // so that events for same cart always ends up in same partition
         String key = "";
-        if (event instanceof MovieRegistered) {
-            MovieRegistered templateRegistered = (MovieRegistered) event;
-            key = templateRegistered.movieId;
+        if (event instanceof ${first_word_of_artifactId}Registered) {
+            ${first_word_of_artifactId}Registered templateRegistered = (${first_word_of_artifactId}Registered) event;
+            key = templateRegistered.${package}Id;
         }
         ProducerRecord<String, byte[]> producerRecord =
                 new ProducerRecord<>(topic, key, serialize(event));
@@ -61,13 +61,13 @@ public class EventsProjectionHandler extends R2dbcHandler<EventEnvelope<Event>> 
     private static byte[] serialize(Event event) {
         final ByteString protoMessage;
         final String fullName;
-        if (event instanceof MovieRegistered) {
-            MovieRegistered templateRegistered = (MovieRegistered) event;
+        if (event instanceof ${first_word_of_artifactId}Registered) {
+            ${first_word_of_artifactId}Registered templateRegistered = (${first_word_of_artifactId}Registered) event;
             protoMessage =
-                    com.akkagrpc.grpc.MovieAdded.newBuilder()
+                    com.akkagrpc.grpc.${first_word_of_artifactId}Added.newBuilder()
                             .build()
                             .toByteString();
-            fullName = com.akkagrpc.grpc.MovieAdded.getDescriptor().getFullName();
+            fullName = com.akkagrpc.grpc.${first_word_of_artifactId}Added.getDescriptor().getFullName();
 
         } else {
             throw new IllegalArgumentException("Unknown event type: " + event.getClass());
@@ -75,7 +75,7 @@ public class EventsProjectionHandler extends R2dbcHandler<EventEnvelope<Event>> 
         // pack in Any so that type information is included for deserialization
         return Any.newBuilder()
                 .setValue(protoMessage)
-                .setTypeUrl("secure-template-service/" + fullName)
+                .setTypeUrl("{artifactId}/" + fullName)
                 .build()
                 .toByteArray();
     }

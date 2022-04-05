@@ -12,8 +12,8 @@ import lombok.Value;
 @Value
 @JsonDeserialize
 @Builder
-public class ${capitalize_artifactId} {
-    String movieId;
+public class ${first_word_of_artifactId} {
+    String ${package}Id;
     String title;
     int releaseYear;
     Float rating;
@@ -25,8 +25,8 @@ public class ${capitalize_artifactId} {
     String smStatus;
 
     @JsonCreator
-    public ${capitalize_artifactId}(String movieId, String title, int releaseYear, Float rating, Genre genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
-        this.movieId = movieId;
+    public ${first_word_of_artifactId}(String ${package}Id, String title, int releaseYear, Float rating, Genre genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
+        this.${package}Id = ${package}Id;
         this.title = title;
         this.releaseYear = releaseYear;
         this.rating = rating;
@@ -38,7 +38,7 @@ public class ${capitalize_artifactId} {
         this.smStatus = smStatus;
     }
 
-    public static ${capitalize_artifactId} EMPTY = new ${capitalize_artifactId}(null, null, 0, null, null, null, null, null, null, "EMPTY");
+    public static ${first_word_of_artifactId} EMPTY = new ${first_word_of_artifactId}(null, null, 0, null, null, null, null, null, null, "EMPTY");
 
     public boolean isEmpty() {
         return "EMPTY".equals(this.smStatus);

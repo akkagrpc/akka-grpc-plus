@@ -9,14 +9,14 @@ import lombok.Getter;
 import ${package}.server.reply.Summary;
 
 @Getter
-public class GetMovie implements Command<Summary> {
+public class Get${first_word_of_artifactId} implements Command<Summary> {
 
-    public String movieId;
+    public String ${package}Id;
     public ActorRef<? super Summary> replyTo;
 
     @JsonCreator
-    public GetMovie(String movieId, ActorRef<Summary> replyTo) {
-        this.movieId = movieId;
+    public Get${first_word_of_artifactId}(String ${package}Id, ActorRef<Summary> replyTo) {
+        this.${package}Id = ${package}Id;
         this.replyTo = replyTo;
     }
 }

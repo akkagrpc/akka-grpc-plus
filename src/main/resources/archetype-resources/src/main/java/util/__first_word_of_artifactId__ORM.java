@@ -4,15 +4,15 @@
 package ${package}.util;
 
 
-import ${package}.server.${capitalize_artifactId};
+import ${package}.server.${first_word_of_artifactId};
 import com.akkagrpc.grpc.Genre;
 
-public final class ${capitalize_artifactId}ORM {
-    private ${capitalize_artifactId}ORM(){}
+public final class ${first_word_of_artifactId}ORM {
+    private ${first_word_of_artifactId}ORM(){}
 
-    public static ${capitalize_artifactId} mapRowTo${capitalize_artifactId}(io.r2dbc.spi.Row row){
-        return ${capitalize_artifactId}.builder()
-                .movieId(row.get("movieid", String.class))
+    public static ${first_word_of_artifactId} mapRowTo${first_word_of_artifactId}(io.r2dbc.spi.Row row){
+        return ${first_word_of_artifactId}.builder()
+                .${package}Id(row.get("${package}id", String.class))
                 .title(row.get("title", String.class))
                 .releaseYear(row.get("releaseyear", Integer.class))
                 .rating(row.get("rating", Float.class))

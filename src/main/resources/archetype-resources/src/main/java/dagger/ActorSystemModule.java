@@ -21,7 +21,7 @@ import javax.inject.Singleton;
 
 @Module()
 public class ActorSystemModule {
-    public final String SYSTEM_NAME = "MovieService";
+    public final String SYSTEM_NAME = "${first_word_of_artifactId}Service";
     @Provides
     @Singleton
     public ActorSystem<?> provideActorSystem() {

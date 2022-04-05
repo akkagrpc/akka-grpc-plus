@@ -6,6 +6,9 @@
     <requiredProperty key ="capitalize_artifactId">
       <defaultValue>${package.getClass().forName("org.apache.velocity.util.StringUtils").removeAndHump("$artifactId", "-")}</defaultValue>
     </requiredProperty>
+    <requiredProperty key ="first_word_of_artifactId">
+      <defaultValue>${package.getClass().forName("org.apache.velocity.util.StringUtils").capitalizeFirstLetter("$artifactId").split("-", 2)[0]}</defaultValue>
+    </requiredProperty>
   </requiredProperties>
   <fileSets>
     <fileSet filtered="true" packaged="true" encoding="UTF-8">

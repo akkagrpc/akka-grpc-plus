@@ -10,15 +10,15 @@ import lombok.Value;
 
 @Value
 @JsonDeserialize
-public class MovieDisabled implements Event {
+public class ${first_word_of_artifactId}Disabled implements Event {
 
-    public String movieId;
+    public String ${package}Id;
     public String disabledBy;
     public String disabledDateTime;
 
     @JsonCreator
-    public MovieDisabled(String movieId, String disabledBy, String disabledDateTime) {
-        this.movieId = Preconditions.checkNotNull(movieId, "movieId");
+    public ${first_word_of_artifactId}Disabled(String ${package}Id, String disabledBy, String disabledDateTime) {
+        this.${package}Id = Preconditions.checkNotNull(${package}Id, "${package}Id");
         this.disabledBy = Preconditions.checkNotNull(disabledBy, "disabledBy");
         this.disabledDateTime = disabledDateTime;
     }

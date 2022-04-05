@@ -12,9 +12,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.r2dbc.spi.Statement;
 import lombok.SneakyThrows;
 import ${package}.server.ESRecord;
-import ${package}.server.${capitalize_artifactId}Report;
+import ${package}.server.${first_word_of_artifactId}Report;
 import ${package}.server.event.Event;
-import ${package}.server.event.MovieRegistered;
+import ${package}.server.event.${first_word_of_artifactId}Registered;
 import ${package}.util.ElasticSearchRestClient;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.RequestOptions;
@@ -42,13 +42,13 @@ public class DBProjectionHandlerImpl extends R2dbcHandler<EventEnvelope<Event>> 
     @Override
     public CompletionStage<Done> process(R2dbcSession session, EventEnvelope<Event> envelope) {
         Event event = envelope.event();
-        if (event instanceof MovieRegistered) {
-            MovieRegistered registered = (MovieRegistered) event;
-            logger.info("${capitalize_artifactId} with ID {} was created at {}", registered.movieId, registered.createdDateTime);
+        if (event instanceof ${first_word_of_artifactId}Registered) {
+            ${first_word_of_artifactId}Registered registered = (${first_word_of_artifactId}Registered) event;
+            logger.info("${first_word_of_artifactId} with ID {} was created at {}", registered.${package}Id, registered.createdDateTime);
             Statement stmt =
                     session.createStatement("INSERT into movie (movieid, title, releaseyear, rating, genre, createdby, creationdatetime, smstatus) " +
                                     "VALUES ($1, $2, $3, $4, $5, $6, $7, $8)")
-                            .bind(0, registered.movieId)
+                            .bind(0, registered.${package}Id)
                             .bind(1, registered.title)
                             .bind(2, registered.releaseYear)
                             .bind(3, registered.rating)
@@ -59,15 +59,15 @@ public class DBProjectionHandlerImpl extends R2dbcHandler<EventEnvelope<Event>> 
             //persistToElasticSearch(convertEventDetailsToSecureTemplateReport(templateRegistered));
             return session.updateOne(stmt).thenApply(rowsUpdated -> Done.getInstance());
         } else {
-            logger.debug("Movie changed by {}", event);
+            logger.debug("${first_word_of_artifactId} changed by {}", event);
             return CompletableFuture.completedFuture(Done.getInstance());
         }
     }
 
     @Override
-    public ${capitalize_artifactId}Report convertEventDetailsTo${capitalize_artifactId}Report(MovieRegistered event) {
-        ${capitalize_artifactId}Report report = new ${capitalize_artifactId}Report();
-        report.setMovieId(event.getMovieId());
+    public ${first_word_of_artifactId}Report convertEventDetailsTo${first_word_of_artifactId}Report(${first_word_of_artifactId}Registered event) {
+        ${first_word_of_artifactId}Report report = new ${first_word_of_artifactId}Report();
+        report.set${first_word_of_artifactId}Id(event.get${first_word_of_artifactId}Id());
         report.setTitle(event.getTitle());
         report.setReleaseYear(event.getReleaseYear());
         report.setRating(event.getRating());
@@ -78,9 +78,9 @@ public class DBProjectionHandlerImpl extends R2dbcHandler<EventEnvelope<Event>> 
         return report;
     }
 
-    private void persistToElasticSearch(${capitalize_artifactId}Report report) throws IOException {
-        IndexRequest indexRequest = new IndexRequest("ps_movies");
-        indexRequest.id(report.getMovieId());
+    private void persistToElasticSearch(${first_word_of_artifactId}Report report) throws IOException {
+        IndexRequest indexRequest = new IndexRequest("ps_${package}s");
+        indexRequest.id(report.get${first_word_of_artifactId}Id());
         ESRecord esSecTempRecord = elasticSearchRestClient.convertToESRecord(report);
         indexRequest.source(new ObjectMapper().writeValueAsString(esSecTempRecord), XContentType.JSON);
         elasticSearchRestClient.getElasticSearchRestClient(false).index(indexRequest, RequestOptions.DEFAULT);

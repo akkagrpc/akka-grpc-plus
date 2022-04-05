@@ -24,9 +24,9 @@ import io.r2dbc.spi.Statement;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ${package}.server.${capitalize_artifactId}Aggregate;
+import ${package}.server.${first_word_of_artifactId}Aggregate;
 import ${package}.server.event.Event;
-import ${package}.server.event.MovieRegistered;
+import ${package}.server.event.${first_word_of_artifactId}Registered;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -56,7 +56,7 @@ public class DBProjectionImpl extends R2dbcHandler<EventEnvelope<Event>> impleme
 
         ShardedDaemonProcess.get(system)
                 .init(ProjectionBehavior.Command.class,
-                        "SecureTemplateProjection",
+                        "${first_word_of_artifactId}Projection",
                         sliceRanges.size(),
                         i -> ProjectionBehavior.create(createProjection(sliceRanges.get(i), system)),
                         ProjectionBehavior.stopMessage());
@@ -66,13 +66,13 @@ public class DBProjectionImpl extends R2dbcHandler<EventEnvelope<Event>> impleme
     @Override
     public CompletionStage<Done> process(R2dbcSession session, EventEnvelope<Event> envelope) {
         Event event = envelope.event();
-        if (event instanceof MovieRegistered) {
-            MovieRegistered templateRegistered = (MovieRegistered) event;
-            logger.info("Secure template with ID {} was created at {}", templateRegistered.movieId, templateRegistered.createdDateTime);
+        if (event instanceof ${first_word_of_artifactId}Registered) {
+            ${first_word_of_artifactId}Registered templateRegistered = (${first_word_of_artifactId}Registered) event;
+            logger.info("${first_word_of_artifactId} with ID {} was created at {}", templateRegistered.${package}Id, templateRegistered.createdDateTime);
             Statement stmt =
-                    session.createStatement("INSERT into movie (movieid, title, releaseyear, rating, genre, createdby, creationdatetime, smstatus) " +
+                    session.createStatement("INSERT into ${package} (${package}id, title, releaseyear, rating, genre, createdby, creationdatetime, smstatus) " +
                                     "VALUES ($1, $2, $3, $4, $5, $6, $7, $8)")
-                            .bind(0, templateRegistered.movieId)
+                            .bind(0, templateRegistered.${package}Id)
                             .bind(1, templateRegistered.title)
                             .bind(2, templateRegistered.releaseYear)
                             .bind(3, templateRegistered.rating)
@@ -83,7 +83,7 @@ public class DBProjectionImpl extends R2dbcHandler<EventEnvelope<Event>> impleme
             //persistToElasticSearch(convertEventDetailsToSecureTemplateReport(templateRegistered));
             return session.updateOne(stmt).thenApply(rowsUpdated -> Done.getInstance());
         } else {
-            logger.debug("SecureTemplate changed by {}", event);
+            logger.debug("${first_word_of_artifactId} changed by {}", event);
             return CompletableFuture.completedFuture(Done.getInstance());
         }
     }
@@ -94,13 +94,13 @@ public class DBProjectionImpl extends R2dbcHandler<EventEnvelope<Event>> impleme
         int minSlice = sliceRange.first();
         int maxSlice = sliceRange.second();
 
-        String entityType = ${capitalize_artifactId}Aggregate.ENTITY_KEY.name();
+        String entityType = ${first_word_of_artifactId}Aggregate.ENTITY_KEY.name();
 
         SourceProvider<Offset, EventEnvelope<Event>> sourceProvider =
                 EventSourcedProvider.eventsBySlices(system, R2dbcReadJournal.Identifier(), entityType, minSlice, maxSlice);
 
         ProjectionId projectionId =
-                ProjectionId.of("${capitalize_artifactId}", "${artifactId}-" + minSlice + "-" + maxSlice);
+                ProjectionId.of("${first_word_of_artifactId}", "${artifactId}-" + minSlice + "-" + maxSlice);
 
         Optional<R2dbcProjectionSettings> settings = Optional.empty();
 
