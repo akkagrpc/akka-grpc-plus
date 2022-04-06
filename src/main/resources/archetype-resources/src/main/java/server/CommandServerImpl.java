@@ -19,9 +19,9 @@ import akka.http.javadsl.model.MediaTypes;
 import akka.http.javadsl.model.headers.RawHeader;
 import akka.http.javadsl.server.Route;
 import akka.japi.function.Function;
-import com.akkagrpc.grpc.${first_word_of_artifactId}Service;
-import com.akkagrpc.grpc.${first_word_of_artifactId}ServicePowerApi;
-import com.akkagrpc.grpc.${first_word_of_artifactId}ServicePowerApiHandlerFactory;
+import com.akkagrpc.grpc.${aggregate_name_with_proper_case}Service;
+import com.akkagrpc.grpc.${aggregate_name_with_proper_case}ServicePowerApi;
+import com.akkagrpc.grpc.${aggregate_name_with_proper_case}ServicePowerApiHandlerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -44,10 +44,10 @@ import static akka.http.javadsl.server.Directives.*;
 @Singleton
 public class CommandServerImpl implements CommandServer {
     ActorSystem<?> system;
-    ${first_word_of_artifactId}ServicePowerApi grpcService;
+    ${aggregate_name_with_proper_case}ServicePowerApi grpcService;
 
     @Inject
-    public CommandServerImpl(ActorSystem<?> system, ${first_word_of_artifactId}ServicePowerApi grpcService) {
+    public CommandServerImpl(ActorSystem<?> system, ${aggregate_name_with_proper_case}ServicePowerApi grpcService) {
         this.system = system;
         this.grpcService = grpcService;
     }
@@ -55,13 +55,13 @@ public class CommandServerImpl implements CommandServer {
     @Override
     public void startCommandServer() {
         Config config = system.settings().config();
-        String host = config.getString("secure-template-service.grpc.interface");
-        int port = config.getInt("secure-template-service.grpc.port");
+        String host = config.getString("${artifactId}.grpc.interface");
+        int port = config.getInt("${artifactId}.grpc.port");
         int dashboardPort = memberPort(Cluster.get(system).selfMember());
 
         Function<HttpRequest, CompletionStage<HttpResponse>> service =
-                ServiceHandler.concatOrNotFound(${first_word_of_artifactId}ServicePowerApiHandlerFactory.create(grpcService, system),
-                        ServerReflection.create(Collections.singletonList(${first_word_of_artifactId}Service.description), system));
+                ServiceHandler.concatOrNotFound(${aggregate_name_with_proper_case}ServicePowerApiHandlerFactory.create(grpcService, system),
+                        ServerReflection.create(Collections.singletonList(${aggregate_name_with_proper_case}Service.description), system));
 
         CompletionStage<ServerBinding> bound = Http.get(system).newServerAt(host, port)
                 .bind(service);
@@ -72,7 +72,7 @@ public class CommandServerImpl implements CommandServer {
                         binding.addToCoordinatedShutdown(Duration.ofSeconds(3), system);
                         InetSocketAddress address = binding.localAddress();
                         system.log().info(
-                                "Secure template at gRPC server {}:{}",
+                                "Started ${aggregate_name_with_proper_case} service at gRPC server {}:{}",
                                 address.getHostString(),
                                 address.getPort());
                     } else {

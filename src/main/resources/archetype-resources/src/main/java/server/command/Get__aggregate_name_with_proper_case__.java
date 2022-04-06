@@ -9,14 +9,14 @@ import lombok.Getter;
 import ${package}.server.reply.Summary;
 
 @Getter
-public class Get${first_word_of_artifactId} implements Command<Summary> {
+public class Get${aggregate_name_with_proper_case} implements Command<Summary> {
 
-    public String ${package}Id;
+    public String ${aggregate_name_with_lower_case}Id;
     public ActorRef<? super Summary> replyTo;
 
     @JsonCreator
-    public Get${first_word_of_artifactId}(String ${package}Id, ActorRef<Summary> replyTo) {
-        this.${package}Id = ${package}Id;
+    public Get${aggregate_name_with_proper_case}(String ${aggregate_name_with_lower_case}Id, ActorRef<Summary> replyTo) {
+        this.${aggregate_name_with_lower_case}Id = ${aggregate_name_with_lower_case}Id;
         this.replyTo = replyTo;
     }
 }

@@ -18,10 +18,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
-import ${package}.query.${first_word_of_artifactId}DAO;
-import ${package}.server.command.Disable${first_word_of_artifactId};
-import ${package}.server.command.Get${first_word_of_artifactId};
-import ${package}.server.command.Register${first_word_of_artifactId};
+import ${package}.query.${aggregate_name_with_proper_case}DAO;
+import ${package}.server.command.Disable${aggregate_name_with_proper_case};
+import ${package}.server.command.Get${aggregate_name_with_proper_case};
+import ${package}.server.command.Register${aggregate_name_with_proper_case};
 import ${package}.server.reply.Summary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,18 +47,18 @@ import java.util.stream.Collectors;
 import reactor.core.publisher.Flux;
 
 @Singleton
-public final class ${first_word_of_artifactId}ServiceImpl implements ${first_word_of_artifactId}ServicePowerApi {
-    private final Logger logger = LoggerFactory.getLogger(${first_word_of_artifactId}ServiceImpl.class);
+public final class ${aggregate_name_with_proper_case}ServiceImpl implements ${aggregate_name_with_proper_case}ServicePowerApi {
+    private final Logger logger = LoggerFactory.getLogger(${aggregate_name_with_proper_case}ServiceImpl.class);
     private final Duration askTimeout;
     private final ClusterSharding clusterSharding;
     private final Executor blockingJdbcExecutor;
     private final MeterRegistry meterRegistry;
-    private final Counter ${package}Counter;
-    private final ${first_word_of_artifactId}DAO dao;
+    private final Counter ${aggregate_name_with_lower_case}Counter;
+    private final ${aggregate_name_with_proper_case}DAO dao;
     private final ActiveDirectoryClient activeDirectoryClient;
 
     @Inject
-    public ${first_word_of_artifactId}ServiceImpl(ActorSystem<?> system, ${first_word_of_artifactId}DAO dao,
+    public ${aggregate_name_with_proper_case}ServiceImpl(ActorSystem<?> system, ${aggregate_name_with_proper_case}DAO dao,
                                      MicrometerClient micrometerClient, ActiveDirectoryClient activeDirectoryClient) {
         this.dao = dao;
         this.activeDirectoryClient = activeDirectoryClient;
@@ -67,21 +67,21 @@ public final class ${first_word_of_artifactId}ServiceImpl implements ${first_wor
         this.clusterSharding = ClusterSharding.get(system);
         this.blockingJdbcExecutor = system.dispatchers().lookup(dispatcherSelector);
         this.meterRegistry = micrometerClient.ixMonitoringSystem();
-        this.${package}Counter = this.meterRegistry.counter("${package}", "genre");
+        this.${aggregate_name_with_lower_case}Counter = this.meterRegistry.counter("${aggregate_name_with_lower_case}", "count");
 
     }
 
-    private EntityRef<Command> entityRef(String ${package}Id) {
-        return clusterSharding.entityRefFor(${first_word_of_artifactId}Aggregate.ENTITY_KEY, ${package}Id);
+    private EntityRef<Command> entityRef(String ${aggregate_name_with_lower_case}Id) {
+        return clusterSharding.entityRefFor(${aggregate_name_with_proper_case}Aggregate.ENTITY_KEY, ${aggregate_name_with_lower_case}Id);
     }
 
     @Override
-    public CompletionStage<Get${first_word_of_artifactId}Response> get${first_word_of_artifactId}(Get${first_word_of_artifactId}Request in, Metadata metadata) {
-        return entityRef(in.get${first_word_of_artifactId}Id())
-        .<Summary>ask(replyTo -> new Get${first_word_of_artifactId}(in.get${first_word_of_artifactId}Id(), replyTo), askTimeout)
-        .thenApply(summary -> Get${first_word_of_artifactId}Response.newBuilder()
-            .set${first_word_of_artifactId}(com.akkagrpc.grpc.${first_word_of_artifactId}.newBuilder()
-            .set${first_word_of_artifactId}Id(summary.get${first_word_of_artifactId}Id())
+    public CompletionStage<Get${aggregate_name_with_proper_case}Response> get${aggregate_name_with_proper_case}(Get${aggregate_name_with_proper_case}Request in, Metadata metadata) {
+        return entityRef(in.get${aggregate_name_with_proper_case}Id())
+        .<Summary>ask(replyTo -> new Get${aggregate_name_with_proper_case}(in.get${aggregate_name_with_proper_case}Id(), replyTo), askTimeout)
+        .thenApply(summary -> Get${aggregate_name_with_proper_case}Response.newBuilder()
+            .set${aggregate_name_with_proper_case}(com.akkagrpc.grpc.${aggregate_name_with_proper_case}.newBuilder()
+            .set${aggregate_name_with_proper_case}Id(summary.get${aggregate_name_with_proper_case}Id())
             .setTitle(summary.getTitle())
             .setRating(summary.getRating())
             .setReleaseYear(summary.getReleaseYear())
@@ -91,42 +91,42 @@ public final class ${first_word_of_artifactId}ServiceImpl implements ${first_wor
     }
 
     @Override
-    public Source<Get${first_word_of_artifactId}sResponse, NotUsed> get${first_word_of_artifactId}s(Empty in, Metadata metadata) {
-        Flux<${package}.server.${first_word_of_artifactId}> ${package}s = dao.get${first_word_of_artifactId}s();
-        return Source.from(${package}s.toIterable())
-        .map(${package} -> {
-        return Get${first_word_of_artifactId}sResponse.newBuilder()
-            .set${first_word_of_artifactId}(com.akkagrpc.grpc.${first_word_of_artifactId}.newBuilder()
-            .set${first_word_of_artifactId}Id(${package}.get${first_word_of_artifactId}Id())
-            .setTitle(${package}.getTitle())
-            .setRating(${package}.getRating())
-            .setReleaseYear(${package}.getReleaseYear())
-            .setGenre(${package}.getGenre())
+    public Source<Get${aggregate_name_with_proper_case}sResponse, NotUsed> get${aggregate_name_with_proper_case}s(Empty in, Metadata metadata) {
+        Flux<${package}.server.${aggregate_name_with_proper_case}> ${aggregate_name_with_lower_case}s = dao.get${aggregate_name_with_proper_case}s();
+        return Source.from(${aggregate_name_with_lower_case}s.toIterable())
+        .map(${aggregate_name_with_lower_case} -> {
+        return Get${aggregate_name_with_proper_case}sResponse.newBuilder()
+            .set${aggregate_name_with_proper_case}(com.akkagrpc.grpc.${aggregate_name_with_proper_case}.newBuilder()
+            .set${aggregate_name_with_proper_case}Id(${aggregate_name_with_lower_case}.get${aggregate_name_with_proper_case}Id())
+            .setTitle(${aggregate_name_with_lower_case}.getTitle())
+            .setRating(${aggregate_name_with_lower_case}.getRating())
+            .setReleaseYear(${aggregate_name_with_lower_case}.getReleaseYear())
+            .setGenre(${aggregate_name_with_lower_case}.getGenre())
             .build())
         .build();
         });
     }
 
     @Override
-    public CompletionStage<Register${first_word_of_artifactId}Response> register${first_word_of_artifactId}(Register${first_word_of_artifactId}Request in, Metadata metadata) {
-        ${package}Counter.increment(1.0);
+    public CompletionStage<Register${aggregate_name_with_proper_case}Response> register${aggregate_name_with_proper_case}(Register${aggregate_name_with_proper_case}Request in, Metadata metadata) {
+        ${aggregate_name_with_lower_case}Counter.increment(1.0);
         String templateId = UUID.randomUUID().toString();
         return entityRef(templateId)
         .<Confirmation>ask(replyTo ->
-        new Register${first_word_of_artifactId}(in, "Anonymous", replyTo), askTimeout)
+        new Register${aggregate_name_with_proper_case}(in, "Anonymous", replyTo), askTimeout)
         .thenApply(this::handleConfirmation)
-        .thenApply(summary -> Register${first_word_of_artifactId}Response.newBuilder()
-            .set${first_word_of_artifactId}Id(summary.getSummary().get${first_word_of_artifactId}Id())
+        .thenApply(summary -> Register${aggregate_name_with_proper_case}Response.newBuilder()
+            .set${aggregate_name_with_proper_case}Id(summary.getSummary().get${aggregate_name_with_proper_case}Id())
         .build());
     }
 
     @Override
-    public CompletionStage<Disable${first_word_of_artifactId}Response> disable${first_word_of_artifactId}(Disable${first_word_of_artifactId}Request in,Metadata metadata){
-        return entityRef(in.get${first_word_of_artifactId}Id())
+    public CompletionStage<Disable${aggregate_name_with_proper_case}Response> disable${aggregate_name_with_proper_case}(Disable${aggregate_name_with_proper_case}Request in,Metadata metadata){
+        return entityRef(in.get${aggregate_name_with_proper_case}Id())
         .<Confirmation>ask(replyTo ->
-        new Disable${first_word_of_artifactId}(in.get${first_word_of_artifactId}Id(), "Anonymous", replyTo), askTimeout)
+        new Disable${aggregate_name_with_proper_case}(in.get${aggregate_name_with_proper_case}Id(), "Anonymous", replyTo), askTimeout)
         .thenApply(this::handleConfirmation)
-        .thenApply(accepted -> Disable${first_word_of_artifactId}Response.newBuilder()
+        .thenApply(accepted -> Disable${aggregate_name_with_proper_case}Response.newBuilder()
             .setResponse(Done.getInstance().toString())
         .build());
     }

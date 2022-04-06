@@ -10,15 +10,15 @@ import lombok.Value;
 
 @Value
 @JsonDeserialize
-public class ${first_word_of_artifactId}Disabled implements Event {
+public class ${aggregate_name_with_proper_case}Disabled implements Event {
 
-    public String ${package}Id;
+    public String ${aggregate_name_with_lower_case}Id;
     public String disabledBy;
     public String disabledDateTime;
 
     @JsonCreator
-    public ${first_word_of_artifactId}Disabled(String ${package}Id, String disabledBy, String disabledDateTime) {
-        this.${package}Id = Preconditions.checkNotNull(${package}Id, "${package}Id");
+    public ${aggregate_name_with_proper_case}Disabled(String ${aggregate_name_with_lower_case}Id, String disabledBy, String disabledDateTime) {
+        this.${aggregate_name_with_lower_case}Id = Preconditions.checkNotNull(${aggregate_name_with_lower_case}Id, "${aggregate_name_with_lower_case}Id");
         this.disabledBy = Preconditions.checkNotNull(disabledBy, "disabledBy");
         this.disabledDateTime = disabledDateTime;
     }

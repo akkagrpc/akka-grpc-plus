@@ -20,7 +20,7 @@ import akka.projection.eventsourced.javadsl.EventSourcedProvider;
 import akka.projection.javadsl.SourceProvider;
 import akka.projection.r2dbc.R2dbcProjectionSettings;
 import akka.projection.r2dbc.javadsl.R2dbcProjection;
-import ${package}.server.${first_word_of_artifactId}Aggregate;
+import ${package}.server.${aggregate_name_with_proper_case}Aggregate;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import ${package}.server.event.Event;
@@ -48,7 +48,7 @@ public final class EventsProjectionImpl implements EventsProjection {
         List<Pair<Integer, Integer>> sliceRanges =
                 EventSourcedProvider.sliceRanges(system, R2dbcReadJournal.Identifier(), numberOfSliceRanges);
         SendProducer<String, byte[]> sendProducer = createProducer(system);
-        String topic = system.settings().config().getString("secure-template-service.kafka.topic");
+        String topic = system.settings().config().getString("${artifactId}.kafka.topic");
 
         ShardedDaemonProcess.get(system)
                 .init(ProjectionBehavior.Command.class,
@@ -64,13 +64,13 @@ public final class EventsProjectionImpl implements EventsProjection {
         int minSlice = sliceRange.first();
         int maxSlice = sliceRange.second();
 
-        String entityType = ${first_word_of_artifactId}Aggregate.ENTITY_KEY.name();
+        String entityType = ${aggregate_name_with_proper_case}Aggregate.ENTITY_KEY.name();
 
         SourceProvider<Offset, EventEnvelope<Event>> sourceProvider =
                 EventSourcedProvider.eventsBySlices(system, R2dbcReadJournal.Identifier(), entityType, minSlice, maxSlice);
 
         ProjectionId projectionId =
-                ProjectionId.of("SecureTemplateEvents", "events-" + minSlice + "-" + maxSlice);
+                ProjectionId.of("${aggregate_name_with_proper_case}Events", "events-" + minSlice + "-" + maxSlice);
 
         Optional<R2dbcProjectionSettings> settings = Optional.empty();
 

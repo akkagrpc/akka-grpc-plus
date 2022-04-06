@@ -12,7 +12,7 @@ import akka.projection.r2dbc.javadsl.R2dbcSession;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import lombok.SneakyThrows;
-import ${package}.server.event.${first_word_of_artifactId}Registered;
+import ${package}.server.event.${aggregate_name_with_proper_case}Registered;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +39,9 @@ public class EventsProjectionHandler extends R2dbcHandler<EventEnvelope<Event>> 
         // using the cartId as the key and `DefaultPartitioner` will select partition based on the key
         // so that events for same cart always ends up in same partition
         String key = "";
-        if (event instanceof ${first_word_of_artifactId}Registered) {
-            ${first_word_of_artifactId}Registered templateRegistered = (${first_word_of_artifactId}Registered) event;
-            key = templateRegistered.${package}Id;
+        if (event instanceof ${aggregate_name_with_proper_case}Registered) {
+            ${aggregate_name_with_proper_case}Registered templateRegistered = (${aggregate_name_with_proper_case}Registered) event;
+            key = templateRegistered.${aggregate_name_with_lower_case}Id;
         }
         ProducerRecord<String, byte[]> producerRecord =
                 new ProducerRecord<>(topic, key, serialize(event));
@@ -61,13 +61,13 @@ public class EventsProjectionHandler extends R2dbcHandler<EventEnvelope<Event>> 
     private static byte[] serialize(Event event) {
         final ByteString protoMessage;
         final String fullName;
-        if (event instanceof ${first_word_of_artifactId}Registered) {
-            ${first_word_of_artifactId}Registered templateRegistered = (${first_word_of_artifactId}Registered) event;
+        if (event instanceof ${aggregate_name_with_proper_case}Registered) {
+            ${aggregate_name_with_proper_case}Registered templateRegistered = (${aggregate_name_with_proper_case}Registered) event;
             protoMessage =
-                    com.akkagrpc.grpc.${first_word_of_artifactId}Added.newBuilder()
+                    com.akkagrpc.grpc.${aggregate_name_with_proper_case}Added.newBuilder()
                             .build()
                             .toByteString();
-            fullName = com.akkagrpc.grpc.${first_word_of_artifactId}Added.getDescriptor().getFullName();
+            fullName = com.akkagrpc.grpc.${aggregate_name_with_proper_case}Added.getDescriptor().getFullName();
 
         } else {
             throw new IllegalArgumentException("Unknown event type: " + event.getClass());

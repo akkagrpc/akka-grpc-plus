@@ -7,10 +7,10 @@ import javax.inject.Inject;
 
 public class QueryServerImpl implements QueryServer {
 
-    ${first_word_of_artifactId}DAO dao;
+    ${aggregate_name_with_proper_case}DAO dao;
 
     @Inject
-    QueryServerImpl(${first_word_of_artifactId}DAO dao){
+    QueryServerImpl(${aggregate_name_with_proper_case}DAO dao){
         this.dao = dao;
     }
 

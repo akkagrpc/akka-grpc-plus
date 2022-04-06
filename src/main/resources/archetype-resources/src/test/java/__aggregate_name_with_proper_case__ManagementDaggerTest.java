@@ -2,17 +2,17 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 import akka.actor.typed.ActorSystem;
-import ${package}.dagger.Dagger${first_word_of_artifactId}ManagementApp_${first_word_of_artifactId}App;
-import ${package}.dagger.${first_word_of_artifactId}ManagementApp;
+import ${package}.dagger.Dagger${aggregate_name_with_proper_case}ManagementApp_${aggregate_name_with_proper_case}App;
+import ${package}.dagger.${aggregate_name_with_proper_case}ManagementApp;
 import ${package}.server.CommandServer;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ${first_word_of_artifactId}ManagementDaggerTest {
+public class ${aggregate_name_with_proper_case}ManagementDaggerTest {
 
     @Test
     public void givenGeneratedComponent_whenBuildingSecureTemplateApp_thenDependenciesInjected() {
-        ${first_word_of_artifactId}ManagementApp.${first_word_of_artifactId}App app = Dagger${first_word_of_artifactId}ManagementApp_${first_word_of_artifactId}App.create();
+        ${aggregate_name_with_proper_case}ManagementApp.${aggregate_name_with_proper_case}App app = Dagger${aggregate_name_with_proper_case}ManagementApp_${aggregate_name_with_proper_case}App.create();
 
         CommandServer injectedCommandServer = app.commandServer();
         ActorSystem<?> injectedActorSystem = app.actorSystem();

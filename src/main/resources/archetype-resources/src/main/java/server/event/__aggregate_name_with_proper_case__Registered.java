@@ -11,8 +11,8 @@ import com.akkagrpc.grpc.Genre;
 
 @Value
 @JsonDeserialize
-public class ${first_word_of_artifactId}Registered implements Event {
-    public String ${package}Id;
+public class ${aggregate_name_with_proper_case}Registered implements Event {
+    public String ${aggregate_name_with_lower_case}Id;
     public String title;
     public int releaseYear;
     public Float rating;
@@ -21,8 +21,8 @@ public class ${first_word_of_artifactId}Registered implements Event {
     public String createdDateTime;
 
     @JsonCreator
-    public ${first_word_of_artifactId}Registered(String ${package}Id, String title, int releaseYear, Float rating, Genre genre, String createdBy, String createdDateTime) {
-        this.${package}Id = ${package}Id;
+    public ${aggregate_name_with_proper_case}Registered(String ${aggregate_name_with_lower_case}Id, String title, int releaseYear, Float rating, Genre genre, String createdBy, String createdDateTime) {
+        this.${aggregate_name_with_lower_case}Id = ${aggregate_name_with_lower_case}Id;
         this.title = title;
         this.releaseYear = releaseYear;
         this.rating = rating;

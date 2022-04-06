@@ -12,8 +12,8 @@ import lombok.Value;
 @Value
 @JsonDeserialize
 @Builder
-public class ${first_word_of_artifactId} {
-    String ${package}Id;
+public class ${aggregate_name_with_proper_case} {
+    String ${aggregate_name_with_lower_case}Id;
     String title;
     int releaseYear;
     Float rating;
@@ -25,8 +25,8 @@ public class ${first_word_of_artifactId} {
     String smStatus;
 
     @JsonCreator
-    public ${first_word_of_artifactId}(String ${package}Id, String title, int releaseYear, Float rating, Genre genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
-        this.${package}Id = ${package}Id;
+    public ${aggregate_name_with_proper_case}(String ${aggregate_name_with_lower_case}Id, String title, int releaseYear, Float rating, Genre genre, String createdBy, String lastModifiedBy, String creationDateTime, String lastModifiedDateTime, String smStatus) {
+        this.${aggregate_name_with_lower_case}Id = ${aggregate_name_with_lower_case}Id;
         this.title = title;
         this.releaseYear = releaseYear;
         this.rating = rating;
@@ -38,7 +38,7 @@ public class ${first_word_of_artifactId} {
         this.smStatus = smStatus;
     }
 
-    public static ${first_word_of_artifactId} EMPTY = new ${first_word_of_artifactId}(null, null, 0, null, null, null, null, null, null, "EMPTY");
+    public static ${aggregate_name_with_proper_case} EMPTY = new ${aggregate_name_with_proper_case}(null, null, 0, null, null, null, null, null, null, "EMPTY");
 
     public boolean isEmpty() {
         return "EMPTY".equals(this.smStatus);

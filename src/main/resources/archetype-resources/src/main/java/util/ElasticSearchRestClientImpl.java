@@ -3,7 +3,7 @@
 #set( $symbol_escape = '\' )
 package ${package}.util;
 
-import ${package}.server.${first_word_of_artifactId}Report;
+import ${package}.server.${aggregate_name_with_proper_case}Report;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -36,9 +36,9 @@ public class ElasticSearchRestClientImpl implements ElasticSearchRestClient {
     }
 
     @Override
-    public ESRecord convertToESRecord(${first_word_of_artifactId}Report record) {
+    public ESRecord convertToESRecord(${aggregate_name_with_proper_case}Report record) {
         ESRecord esRecord = new ESRecord();
-        esRecord.set${first_word_of_artifactId}Id(record.get${first_word_of_artifactId}Id());
+        esRecord.set${aggregate_name_with_proper_case}Id(record.get${aggregate_name_with_proper_case}Id());
         esRecord.setTitle(record.getTitle());
         esRecord.setReleaseYear(record.getReleaseYear());
         esRecord.setRating(record.getRating());

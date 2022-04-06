@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class ESRecord {
-    private String ${package}Id;
+    private String ${aggregate_name_with_lower_case}Id;
     private String title;
     private int releaseYear;
     private Float rating;

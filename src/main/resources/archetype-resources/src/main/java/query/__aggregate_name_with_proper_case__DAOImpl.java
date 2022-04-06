@@ -10,8 +10,8 @@ import io.r2dbc.spi.Connection;
 import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
 import io.r2dbc.spi.ConnectionFactoryOptions;
-import ${package}.server.${first_word_of_artifactId};
-import ${package}.util.${first_word_of_artifactId}ORM;
+import ${package}.server.${aggregate_name_with_proper_case};
+import ${package}.util.${aggregate_name_with_proper_case}ORM;
 import ${package}.util.R2dbc;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -20,13 +20,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class ${first_word_of_artifactId}DAOImpl implements ${first_word_of_artifactId}DAO {
+public class ${aggregate_name_with_proper_case}DAOImpl implements ${aggregate_name_with_proper_case}DAO {
 
     private final ConnectionFactory connectionFactory;
 
 
     @Inject
-    public ${first_word_of_artifactId}DAOImpl(Config config) {
+    public ${aggregate_name_with_proper_case}DAOImpl(Config config) {
 
         String driver = config.getString("${artifactId}.dao.driver");
         String host = config.getString("${artifactId}.dao.host");
@@ -48,36 +48,36 @@ public class ${first_word_of_artifactId}DAOImpl implements ${first_word_of_artif
     }
 
     @Override
-    public final Mono<${first_word_of_artifactId}> get${first_word_of_artifactId}ById(String ${package}Id) {
+    public final Mono<${aggregate_name_with_proper_case}> get${aggregate_name_with_proper_case}ById(String ${aggregate_name_with_lower_case}Id) {
         return Mono.usingWhen(connectionFactory.create(),
                 connection ->
-                        Mono.from(connection.createStatement("SELECT * FROM public.${package} WHERE ${package}id = $1")
-                                        .bind("$1", ${package}Id)
+                        Mono.from(connection.createStatement("SELECT * FROM public.${aggregate_name_with_lower_case} WHERE ${aggregate_name_with_lower_case}id = $1")
+                                        .bind("$1", ${aggregate_name_with_lower_case}Id)
                                         .execute())
-                                .map(result -> result.map((row, rowMetadata) -> ${first_word_of_artifactId}ORM.mapRowTo${first_word_of_artifactId}(row)))
+                                .map(result -> result.map((row, rowMetadata) -> ${aggregate_name_with_proper_case}ORM.mapRowTo${aggregate_name_with_proper_case}(row)))
                                 .flatMap(pub -> Mono.from(pub)),
                 Connection::close);
     }
 
     @Override
-    public final Source<${first_word_of_artifactId}, NotUsed> get${first_word_of_artifactId}ByTemplateId(String ${package}Id) {
+    public final Source<${aggregate_name_with_proper_case}, NotUsed> get${aggregate_name_with_proper_case}ByTemplateId(String ${aggregate_name_with_lower_case}Id) {
         R2dbc r2dbc = new R2dbc(connectionFactory);
         return Source.fromPublisher(r2dbc.withHandle(
                 handle -> {
-                    return handle.select("SELECT * FROM public.${package} WHERE ${package}id = $1")
-                            .bind("$1", ${package}Id)
-                            .mapResult(result -> result.map((row, rowMetadata) -> ${first_word_of_artifactId}ORM.mapRowTo${first_word_of_artifactId}(row)));
+                    return handle.select("SELECT * FROM public.${aggregate_name_with_lower_case} WHERE ${aggregate_name_with_lower_case}id = $1")
+                            .bind("$1", ${aggregate_name_with_lower_case}Id)
+                            .mapResult(result -> result.map((row, rowMetadata) -> ${aggregate_name_with_proper_case}ORM.mapRowTo${aggregate_name_with_proper_case}(row)));
                 }
         ));
     }
 
     @Override
-    public final Flux<${first_word_of_artifactId}> get${first_word_of_artifactId}s() {
+    public final Flux<${aggregate_name_with_proper_case}> get${aggregate_name_with_proper_case}s() {
         R2dbc r2dbc = new R2dbc(connectionFactory);
         return r2dbc.withHandle(
                 handle -> {
-                    return handle.select("SELECT * FROM public.${package}")
-                            .mapResult(result -> result.map((row, rowMetadata) -> ${first_word_of_artifactId}ORM.mapRowTo${first_word_of_artifactId}(row)));
+                    return handle.select("SELECT * FROM public.${aggregate_name_with_lower_case}")
+                            .mapResult(result -> result.map((row, rowMetadata) -> ${aggregate_name_with_proper_case}ORM.mapRowTo${aggregate_name_with_proper_case}(row)));
                 }
         );
     }

@@ -3,32 +3,32 @@
 #set( $symbol_escape = '\' )
 package ${package}.dagger;
 
-import com.akkagrpc.grpc.${first_word_of_artifactId}ServicePowerApi;
+import com.akkagrpc.grpc.${aggregate_name_with_proper_case}ServicePowerApi;
 import dagger.Binds;
 import dagger.Module;
 import ${package}.projection.*;
-import ${package}.query.${first_word_of_artifactId}DAO;
-import ${package}.query.${first_word_of_artifactId}DAOImpl;
+import ${package}.query.${aggregate_name_with_proper_case}DAO;
+import ${package}.query.${aggregate_name_with_proper_case}DAOImpl;
 import ${package}.query.QueryServer;
 import ${package}.query.QueryServerImpl;
 
 import ${package}.server.CommandServer;
 import ${package}.server.CommandServerImpl;
-import ${package}.server.${first_word_of_artifactId}ServiceImpl;
+import ${package}.server.${aggregate_name_with_proper_case}ServiceImpl;
 import ${package}.util.*;
 
 import javax.inject.Singleton;
 
 @Module
-public interface ${first_word_of_artifactId}ManagementModule {
+public interface ${aggregate_name_with_proper_case}ManagementModule {
 
     @Binds
     @Singleton
-    ${first_word_of_artifactId}ServicePowerApi bind${first_word_of_artifactId}ServicePowerApi(${first_word_of_artifactId}ServiceImpl impl);
+    ${aggregate_name_with_proper_case}ServicePowerApi bind${aggregate_name_with_proper_case}ServicePowerApi(${aggregate_name_with_proper_case}ServiceImpl impl);
 
     @Binds
     @Singleton
-    ${first_word_of_artifactId}DAO bind${first_word_of_artifactId}DAO(${first_word_of_artifactId}DAOImpl dao);
+    ${aggregate_name_with_proper_case}DAO bind${aggregate_name_with_proper_case}DAO(${aggregate_name_with_proper_case}DAOImpl dao);
 
     @Binds
     @Singleton
