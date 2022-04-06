@@ -110,8 +110,8 @@ public final class ${aggregate_name_with_proper_case}ServiceImpl implements ${ag
     @Override
     public CompletionStage<Register${aggregate_name_with_proper_case}Response> register${aggregate_name_with_proper_case}(Register${aggregate_name_with_proper_case}Request in, Metadata metadata) {
         ${aggregate_name_with_lower_case}Counter.increment(1.0);
-        String templateId = UUID.randomUUID().toString();
-        return entityRef(templateId)
+        String ${aggregate_name_with_proper_case}Id = UUID.randomUUID().toString();
+        return entityRef(${aggregate_name_with_proper_case}Id)
         .<Confirmation>ask(replyTo ->
         new Register${aggregate_name_with_proper_case}(in, "Anonymous", replyTo), askTimeout)
         .thenApply(this::handleConfirmation)

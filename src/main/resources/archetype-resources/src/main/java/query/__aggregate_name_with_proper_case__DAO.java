@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 public interface ${aggregate_name_with_proper_case}DAO {
     Mono<${aggregate_name_with_proper_case}> get${aggregate_name_with_proper_case}ById(String ${aggregate_name_with_lower_case}Id);
 
-    Source<${aggregate_name_with_proper_case}, NotUsed> get${aggregate_name_with_proper_case}ByTemplateId(String ${aggregate_name_with_lower_case}Id);
+    Source<${aggregate_name_with_proper_case}, NotUsed> get${aggregate_name_with_proper_case}By${aggregate_name_with_proper_case}Id(String ${aggregate_name_with_lower_case}Id);
 
     Flux<${aggregate_name_with_proper_case}> get${aggregate_name_with_proper_case}s();
 }

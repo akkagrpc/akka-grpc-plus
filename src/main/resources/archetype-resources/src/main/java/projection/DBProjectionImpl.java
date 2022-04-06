@@ -67,20 +67,20 @@ public class DBProjectionImpl extends R2dbcHandler<EventEnvelope<Event>> impleme
     public CompletionStage<Done> process(R2dbcSession session, EventEnvelope<Event> envelope) {
         Event event = envelope.event();
         if (event instanceof ${aggregate_name_with_proper_case}Registered) {
-            ${aggregate_name_with_proper_case}Registered templateRegistered = (${aggregate_name_with_proper_case}Registered) event;
-            logger.info("${aggregate_name_with_proper_case} with ID {} was created at {}", templateRegistered.${aggregate_name_with_lower_case}Id, templateRegistered.createdDateTime);
+            ${aggregate_name_with_proper_case}Registered eventRegistered = (${aggregate_name_with_proper_case}Registered) event;
+            logger.info("${aggregate_name_with_proper_case} with ID {} was created at {}", eventRegistered.${aggregate_name_with_lower_case}Id, eventRegistered.createdDateTime);
             Statement stmt =
                     session.createStatement("INSERT into ${aggregate_name_with_lower_case} (${aggregate_name_with_lower_case}id, title, releaseyear, rating, genre, createdby, creationdatetime, smstatus) " +
                                     "VALUES ($1, $2, $3, $4, $5, $6, $7, $8)")
-                            .bind(0, templateRegistered.${aggregate_name_with_lower_case}Id)
-                            .bind(1, templateRegistered.title)
-                            .bind(2, templateRegistered.releaseYear)
-                            .bind(3, templateRegistered.rating)
-                            .bind(4, templateRegistered.genre)
-                            .bind(5, templateRegistered.createdBy)
-                            .bind(6, templateRegistered.createdDateTime)
+                            .bind(0, eventRegistered.${aggregate_name_with_lower_case}Id)
+                            .bind(1, eventRegistered.title)
+                            .bind(2, eventRegistered.releaseYear)
+                            .bind(3, eventRegistered.rating)
+                            .bind(4, eventRegistered.genre)
+                            .bind(5, eventRegistered.createdBy)
+                            .bind(6, eventRegistered.createdDateTime)
                             .bind(7, "NEW");
-            //persistToElasticSearch(convertEventDetailsToSecureTemplateReport(templateRegistered));
+            //persistToElasticSearch(convertEventDetailsTo${aggregate_name_with_proper_case}Report(eventRegistered));
             return session.updateOne(stmt).thenApply(rowsUpdated -> Done.getInstance());
         } else {
             logger.debug("${aggregate_name_with_proper_case} changed by {}", event);

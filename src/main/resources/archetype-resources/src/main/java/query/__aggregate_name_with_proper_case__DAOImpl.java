@@ -60,7 +60,7 @@ public class ${aggregate_name_with_proper_case}DAOImpl implements ${aggregate_na
     }
 
     @Override
-    public final Source<${aggregate_name_with_proper_case}, NotUsed> get${aggregate_name_with_proper_case}ByTemplateId(String ${aggregate_name_with_lower_case}Id) {
+    public final Source<${aggregate_name_with_proper_case}, NotUsed> get${aggregate_name_with_proper_case}By${aggregate_name_with_proper_case}Id(String ${aggregate_name_with_lower_case}Id) {
         R2dbc r2dbc = new R2dbc(connectionFactory);
         return Source.fromPublisher(r2dbc.withHandle(
                 handle -> {

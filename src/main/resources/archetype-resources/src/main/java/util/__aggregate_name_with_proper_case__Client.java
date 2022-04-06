@@ -19,15 +19,15 @@ public class ${aggregate_name_with_proper_case}Client {
         final ActorSystem system = ActorSystem.create();
 
         Config config = system.settings().config();
-        String serverHost = config.getString("secure-template-service.grpc.interface");
-        int serverPort = config.getInt("secure-template-service.grpc.port");
+        String serverHost = config.getString("${artifactId}.grpc.interface");
+        int serverPort = config.getInt("${artifactId}.grpc.port");
 
         ServiceDiscovery serviceDiscovery = Discovery.get(system).discovery();
 
         // Configure the client by code:
         GrpcClientSettings settings = GrpcClientSettings
                 .connectToServiceAt(serverHost, serverPort, system)
-                .usingServiceDiscovery("SecureTemplateService", system)
+                .usingServiceDiscovery("${aggregate_name_with_proper_case}Service", system)
                 .withTls(false);
 
         // Or via application.conf:
@@ -36,7 +36,7 @@ public class ${aggregate_name_with_proper_case}Client {
         ${aggregate_name_with_proper_case}ServiceClient client = null;
         try {
             client = ${aggregate_name_with_proper_case}ServiceClient.create(settings, system);
-            //registerSecureTemplate(client);
+            //register${aggregate_name_with_proper_case}(client);
         } catch (StatusRuntimeException e) {
             System.out.println("Status: " + e.getStatus());
         } catch (Exception e) {
@@ -46,10 +46,10 @@ public class ${aggregate_name_with_proper_case}Client {
             system.terminate();
         }
     }
-    /*private static void registerSecureTemplate(SecureTemplateServiceClient client) throws Exception {
-        RegisterSecureTemplateRequest request = RegisterSecureTemplateRequest.newBuilder()
-                .setTemplateName("TestSecTemplate")
-                .setDescription("SecTemplateDescription")
+    /*private static void register${aggregate_name_with_proper_case}(${aggregate_name_with_proper_case}ServiceClient client) throws Exception {
+        Register${aggregate_name_with_proper_case}Request request = Register${aggregate_name_with_proper_case}Request.newBuilder()
+                .set${aggregate_name_with_proper_case}Name("Test${aggregate_name_with_proper_case}")
+                .setDescription("${aggregate_name_with_proper_case}Description")
                 .setDomainName("npb")
                 .setIpAddress("10.210.0.5")
                 .setPort("389")
@@ -59,10 +59,10 @@ public class ${aggregate_name_with_proper_case}Client {
                 .setOwner("Raviraj Katwate")
                 .setPermission("Full")
                 .build();
-        CompletionStage<RegisterSecureTemplateResponse> registerSecureTemplateReply = client.registerSecureTemplate().addHeader("Authorization", JWT_TOKEN).invoke(request);
-        registerSecureTemplateReply.whenComplete((reply, error) -> {
+        CompletionStage<Register${aggregate_name_with_proper_case}Response> register${aggregate_name_with_proper_case}Reply = client.register${aggregate_name_with_proper_case}().addHeader("Authorization", JWT_TOKEN).invoke(request);
+        register${aggregate_name_with_proper_case}Reply.whenComplete((reply, error) -> {
             if (error == null) {
-                System.out.println(reply.getTemplateId());
+                System.out.println(reply.get${aggregate_name_with_proper_case}Id());
             } else {
                 System.out.println(error.getMessage());
             }

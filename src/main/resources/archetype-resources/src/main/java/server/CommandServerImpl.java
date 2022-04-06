@@ -82,7 +82,7 @@ public class CommandServerImpl implements CommandServer {
                 });
         dashboardPort = dashboardPort + 7000;
         Http.get(system).newServerAt(host, dashboardPort).bind(route(system));
-        system.log().info("Secure template management dashboard available on {}:{}", host, dashboardPort);
+        system.log().info("${aggregate_name_with_proper_case} service management dashboard available on {}:{}", host, dashboardPort);
     }
 
     private int memberPort(Member member) {

@@ -104,7 +104,7 @@ public class ${aggregate_name_with_proper_case}Aggregate extends EventSourcedBeh
                 .onCommand(Disable${aggregate_name_with_proper_case}.class, this::onDisable${aggregate_name_with_proper_case});
 
         builder.forState(${aggregate_name_with_proper_case}::isDisabled)
-                .onCommand(Disable${aggregate_name_with_proper_case}.class, cmd -> Effect().reply(cmd.replyTo, new Rejected("Cannot disable already disabled template")));
+                .onCommand(Disable${aggregate_name_with_proper_case}.class, cmd -> Effect().reply(cmd.replyTo, new Rejected("Cannot disable already disabled")));
 
         builder.forAnyState().onCommand(Get${aggregate_name_with_proper_case}.class, this::onGet);
 

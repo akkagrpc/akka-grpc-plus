@@ -40,8 +40,8 @@ public class EventsProjectionHandler extends R2dbcHandler<EventEnvelope<Event>> 
         // so that events for same cart always ends up in same partition
         String key = "";
         if (event instanceof ${aggregate_name_with_proper_case}Registered) {
-            ${aggregate_name_with_proper_case}Registered templateRegistered = (${aggregate_name_with_proper_case}Registered) event;
-            key = templateRegistered.${aggregate_name_with_lower_case}Id;
+            ${aggregate_name_with_proper_case}Registered eventRegistered = (${aggregate_name_with_proper_case}Registered) event;
+            key = eventRegistered.${aggregate_name_with_lower_case}Id;
         }
         ProducerRecord<String, byte[]> producerRecord =
                 new ProducerRecord<>(topic, key, serialize(event));
@@ -62,7 +62,7 @@ public class EventsProjectionHandler extends R2dbcHandler<EventEnvelope<Event>> 
         final ByteString protoMessage;
         final String fullName;
         if (event instanceof ${aggregate_name_with_proper_case}Registered) {
-            ${aggregate_name_with_proper_case}Registered templateRegistered = (${aggregate_name_with_proper_case}Registered) event;
+            ${aggregate_name_with_proper_case}Registered eventRegistered = (${aggregate_name_with_proper_case}Registered) event;
             protoMessage =
                     com.akkagrpc.grpc.${aggregate_name_with_proper_case}Added.newBuilder()
                             .build()
