@@ -8,6 +8,10 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import lombok.SneakyThrows;
 
+import akka.actor.typed.ActorSystem;
+import ${package}.dagger.ActorSystemModule;
+import com.typesafe.config.Config;
+
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
