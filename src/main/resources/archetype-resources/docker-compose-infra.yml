@@ -5,8 +5,8 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: secure-template
-      POSTGRES_PASSWORD: secure-template
+      POSTGRES_USER: movie
+      POSTGRES_PASSWORD: movie
 
   # this second PostgresSQL is used when running test
   postgres-db-test:
@@ -14,9 +14,9 @@ services:
     ports:
       - 5433:5432
     environment:
-      POSTGRES_DB: secure-template
-      POSTGRES_USER: secure-template
-      POSTGRES_PASSWORD: secure-template
+      POSTGRES_DB: movie
+      POSTGRES_USER: movie
+      POSTGRES_PASSWORD: movie
 
 # See dockerhub for different versions of kafka and zookeeper
 # https://hub.docker.com/r/wurstmeister/kafka/

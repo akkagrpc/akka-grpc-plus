@@ -28,8 +28,8 @@ static_resources:
           - name: envoy.filters.http.grpc_json_transcoder
             typed_config:
               "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder
-              proto_descriptor: "/data/SecureTemplate.pb"
-              services: ["securetemplate.SecureTemplateService"]
+              proto_descriptor: "/data/Movie.pb"
+              services: ["com.akkagrpc.MovieService"]
               print_options:
                 add_whitespace: true
                 always_print_primitive_fields: true

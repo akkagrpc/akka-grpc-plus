@@ -16,14 +16,14 @@ fi
 if [ "$(groups | grep -c docker)" -gt "0" ]; then
     echo "Envoy will run at port 51051 (see envoy-config.yml)"
     docker run -it --rm --name envoy --network="host" \
-             -v "$(pwd)/SecureTemplate.pb:/data/SecureTemplate.pb:ro" \
+             -v "$(pwd)/Movie.pb:/data/Movie.pb:ro" \
              -v "$(pwd)/envoy-config.yml:/etc/envoy/envoy.yaml:ro" \
              envoyproxy/envoy
 else
     echo "you are not in the docker group, running with sudo"
     echo "Envoy will run at port 51051 (see envoy-config.yml)"
     winpty docker run -it -p 51051:51051 --rm --name envoy \
-             -v "$(pwd)/SecureTemplate.pb:/data/SecureTemplate.pb:ro" \
+             -v "$(pwd)/Movie.pb:/data/Movie.pb:ro" \
              -v "$(pwd)/envoy-config.yml:/etc/envoy/envoy.yaml:ro" \
              envoyproxy/envoy:v1.21-latest
 fi
