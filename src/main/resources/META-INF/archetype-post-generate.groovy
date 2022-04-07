@@ -15,3 +15,16 @@ content = content.replaceAll("Movie", artifactIdProperCaseExp)
 event_content = event_content.replaceAll("Movie", artifactIdProperCaseExp)
 Files.writeString(protoFilePath, content);
 Files.writeString(protoEventsFilePath, event_content);
+
+Path ddlFilePath = projectPath.resolve("src/main/resources/ddl-scripts/create_user_tables.sql")
+String ddl_content = Files.readString(ddlFilePath)
+ddl_content = ddl_content.replaceAll("movie", artifactIdLowerCaseExp)
+Files.writeString(ddlFilePath, ddl_content);
+
+Path appConfFilePath = projectPath.resolve("src/main/resources/application.conf")
+String app_conf_content = Files.readString(appConfFilePath)
+app_conf_content = app_conf_content.replaceAll("secure-template", artifactIdLowerCaseExp)
+app_conf_content = app_conf_content.replaceAll("SecureTemplate", artifactIdProperCaseExp)
+app_conf_content = app_conf_content.replaceAll("movie", artifactIdLowerCaseExp)
+app_conf_content = app_conf_content.replaceAll("Movie", artifactIdProperCaseExp)
+Files.writeString(appConfFilePath, app_conf_content);
