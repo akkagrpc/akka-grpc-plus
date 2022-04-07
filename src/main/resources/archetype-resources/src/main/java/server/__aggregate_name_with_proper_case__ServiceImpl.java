@@ -66,7 +66,7 @@ public final class ${aggregate_name_with_proper_case}ServiceImpl implements ${ag
         this.askTimeout = system.settings().config().getDuration("${artifactId}.ask-timeout");
         this.clusterSharding = ClusterSharding.get(system);
         this.blockingJdbcExecutor = system.dispatchers().lookup(dispatcherSelector);
-        this.meterRegistry = micrometerClient.ixMonitoringSystem();
+        this.meterRegistry = micrometerClient.monitoringSystem();
         this.${aggregate_name_with_lower_case}Counter = this.meterRegistry.counter("${aggregate_name_with_lower_case}", "count");
 
     }

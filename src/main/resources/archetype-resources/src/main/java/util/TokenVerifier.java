@@ -35,7 +35,10 @@ public class TokenVerifier {
     }
 
     private static PublicKey getPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
-        String rsaPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoWGdoQYz5V+T0DHJlJXzSxJoPnil+j1diyotbzhoRy5ruvemeIGplJNfjcYeIPXUhjZGkCeSeI1pDelwuM/GouzvASAxn0aOnQJCgv/sf8a4YJBB+Rogi4qCtgOrq3xGWx1pWqLbxOtzfO+X9CRFbpq3gqHk2cXktL1CxtJWQ3tmNNX+3cxCJqyBUX5je2MYeXzEiUnS+Tb1DJgi6iKPz2Bf3VNtSjckkTvHA39VhhOb/M5F5+nKeYvyYN1B/QU/ZFl+0CG4NYc95zUzXuI13/k+iPgG1TNY919HvZrnU7l/y53ikmTLG5kuesdvWVG9UAUjABXYjKBEWn7IdrGckQIDAQAB";
+        ActorSystemModule actorSystemModule = new ActorSystemModule();
+        ActorSystem<?> system = actorSystemModule.provideActorSystem();
+        Config config = system.settings().config();
+        String rsaPublicKey = config.getString("jwt.rsa.public-key");
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Base64.getDecoder().decode(rsaPublicKey));
         KeyFactory kf = KeyFactory.getInstance("RSA");
         PublicKey publicKey = kf.generatePublic(keySpec);

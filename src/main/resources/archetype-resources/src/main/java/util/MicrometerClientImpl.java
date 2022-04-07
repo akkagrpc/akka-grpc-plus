@@ -23,7 +23,7 @@ public class MicrometerClientImpl implements MicrometerClient {
     }
 
 
-    public PrometheusMeterRegistry ixMonitoringSystem() {
+    public PrometheusMeterRegistry monitoringSystem() {
         new ClassLoaderMetrics().bindTo(prometheusMeterRegistry);
         new JvmMemoryMetrics().bindTo(prometheusMeterRegistry);
         new JvmGcMetrics().bindTo(prometheusMeterRegistry);

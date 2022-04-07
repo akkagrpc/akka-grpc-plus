@@ -9,5 +9,5 @@ import javax.inject.Singleton;
 
 @Singleton
 public interface MicrometerClient {
-    PrometheusMeterRegistry ixMonitoringSystem();
+    PrometheusMeterRegistry monitoringSystem();
 }

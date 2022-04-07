@@ -17,7 +17,7 @@ event_content = event_content.replaceAll("Movie", artifactIdProperCaseExp)
 Files.writeString(protoFilePath, content);
 Files.writeString(protoEventsFilePath, event_content);
 
-Path ddlFilePath = projectPath.resolve("src/main/resources/ddl-scripts/create_user_tables.sql")
+Path ddlFilePath = projectPath.resolve("src/main/resources/ddl-scripts/create_projection_tables.sql")
 String ddl_content = Files.readString(ddlFilePath)
 ddl_content = ddl_content.replaceAll("movie", artifactIdLowerCaseExp)
 Files.writeString(ddlFilePath, ddl_content);
@@ -74,6 +74,11 @@ Path startEnvoyFilePath = projectPath.resolve("start-envoy.sh")
 String start_envoy_content = Files.readString(startEnvoyFilePath)
 start_envoy_content = start_envoy_content.replaceAll("Movie", artifactIdProperCaseExp)
 Files.writeString(startEnvoyFilePath, start_envoy_content);
+
+Path descriptorFilePath = projectPath.resolve("generate-descriptor.sh")
+String generate_descriptor_content = Files.readString(descriptorFilePath)
+generate_descriptor_content = generate_descriptor_content.replaceAll("movie", artifactIdLowerCaseExp)
+Files.writeString(descriptorFilePath, generate_descriptor_content);
 
 Path pomXmlFilePath = projectPath.resolve("pom.xml")
 String pom_xml_content = Files.readString(pomXmlFilePath)
