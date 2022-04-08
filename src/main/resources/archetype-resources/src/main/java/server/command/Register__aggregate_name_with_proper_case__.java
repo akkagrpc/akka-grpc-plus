@@ -4,7 +4,7 @@
 package ${package}.server.command;
 
 import akka.actor.typed.ActorRef;
-import com.akkagrpc.grpc.Register${aggregate_name_with_proper_case}Request;
+import com.akkagrpc.${aggregate_name_with_lower_case}.Register${aggregate_name_with_proper_case}Request;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Value;

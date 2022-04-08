@@ -3,7 +3,7 @@
 #set( $symbol_escape = '\' )
 package ${package}.dagger;
 
-import com.akkagrpc.grpc.${aggregate_name_with_proper_case}ServicePowerApi;
+import com.akkagrpc.${aggregate_name_with_lower_case}.${aggregate_name_with_proper_case}ServicePowerApi;
 import dagger.Binds;
 import dagger.Module;
 import ${package}.projection.*;

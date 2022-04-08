@@ -5,7 +5,7 @@ package ${package}.util;
 
 
 import ${package}.server.${aggregate_name_with_proper_case};
-import com.akkagrpc.grpc.Genre;
+import com.akkagrpc.${aggregate_name_with_lower_case}.Genre;
 
 public final class ${aggregate_name_with_proper_case}ORM {
     private ${aggregate_name_with_proper_case}ORM(){}

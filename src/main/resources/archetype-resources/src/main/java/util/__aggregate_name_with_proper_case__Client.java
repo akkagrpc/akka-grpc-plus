@@ -7,7 +7,7 @@ import akka.actor.ActorSystem;
 import akka.discovery.Discovery;
 import akka.discovery.ServiceDiscovery;
 import akka.grpc.GrpcClientSettings;
-import com.akkagrpc.grpc.${aggregate_name_with_proper_case}ServiceClient;
+import com.akkagrpc.${aggregate_name_with_lower_case}.${aggregate_name_with_proper_case}ServiceClient;
 import com.typesafe.config.Config;
 import io.grpc.StatusRuntimeException;
 

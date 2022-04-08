@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Preconditions;
 import lombok.Value;
-import com.akkagrpc.grpc.Genre;
+import com.akkagrpc.${aggregate_name_with_lower_case}.Genre;
 
 @Value
 @JsonDeserialize

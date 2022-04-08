@@ -4,7 +4,7 @@
 package ${package}.util;
 
 
-import com.akkagrpc.grpc.ValidateActiveDirectoryDetailsRequest;
+import com.akkagrpc.${aggregate_name_with_lower_case}.ValidateActiveDirectoryDetailsRequest;
 import ${package}.util.model.ADGroup;
 import ${package}.util.model.User;
 

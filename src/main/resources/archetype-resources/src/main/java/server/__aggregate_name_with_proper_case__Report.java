@@ -2,7 +2,7 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 package ${package}.server;
-import com.akkagrpc.grpc.Genre;
+import com.akkagrpc.${aggregate_name_with_lower_case}.Genre;
 
 import lombok.Data;
 

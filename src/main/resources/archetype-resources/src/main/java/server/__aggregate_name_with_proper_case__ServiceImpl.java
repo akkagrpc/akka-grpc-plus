@@ -11,7 +11,7 @@ import akka.cluster.sharding.typed.javadsl.ClusterSharding;
 import akka.cluster.sharding.typed.javadsl.EntityRef;
 import akka.grpc.javadsl.Metadata;
 import akka.stream.javadsl.Source;
-import com.akkagrpc.grpc.*;
+import com.akkagrpc.${aggregate_name_with_lower_case}.*;
 import com.google.common.base.Strings;
 import com.google.protobuf.Empty;
 import io.jsonwebtoken.Claims;
@@ -80,7 +80,7 @@ public final class ${aggregate_name_with_proper_case}ServiceImpl implements ${ag
         return entityRef(in.get${aggregate_name_with_proper_case}Id())
         .<Summary>ask(replyTo -> new Get${aggregate_name_with_proper_case}(in.get${aggregate_name_with_proper_case}Id(), replyTo), askTimeout)
         .thenApply(summary -> Get${aggregate_name_with_proper_case}Response.newBuilder()
-            .set${aggregate_name_with_proper_case}(com.akkagrpc.grpc.${aggregate_name_with_proper_case}.newBuilder()
+            .set${aggregate_name_with_proper_case}(com.akkagrpc.${aggregate_name_with_lower_case}.${aggregate_name_with_proper_case}.newBuilder()
             .set${aggregate_name_with_proper_case}Id(summary.get${aggregate_name_with_proper_case}Id())
             .setTitle(summary.getTitle())
             .setRating(summary.getRating())
@@ -96,7 +96,7 @@ public final class ${aggregate_name_with_proper_case}ServiceImpl implements ${ag
         return Source.from(${aggregate_name_with_lower_case}s.toIterable())
         .map(${aggregate_name_with_lower_case} -> {
         return Get${aggregate_name_with_proper_case}sResponse.newBuilder()
-            .set${aggregate_name_with_proper_case}(com.akkagrpc.grpc.${aggregate_name_with_proper_case}.newBuilder()
+            .set${aggregate_name_with_proper_case}(com.akkagrpc.${aggregate_name_with_lower_case}.${aggregate_name_with_proper_case}.newBuilder()
             .set${aggregate_name_with_proper_case}Id(${aggregate_name_with_lower_case}.get${aggregate_name_with_proper_case}Id())
             .setTitle(${aggregate_name_with_lower_case}.getTitle())
             .setRating(${aggregate_name_with_lower_case}.getRating())

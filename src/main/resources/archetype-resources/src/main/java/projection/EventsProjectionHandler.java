@@ -64,10 +64,10 @@ public class EventsProjectionHandler extends R2dbcHandler<EventEnvelope<Event>> 
         if (event instanceof ${aggregate_name_with_proper_case}Registered) {
             ${aggregate_name_with_proper_case}Registered eventRegistered = (${aggregate_name_with_proper_case}Registered) event;
             protoMessage =
-                    com.akkagrpc.grpc.${aggregate_name_with_proper_case}Added.newBuilder()
+                    com.akkagrpc.${aggregate_name_with_lower_case}.${aggregate_name_with_proper_case}Added.newBuilder()
                             .build()
                             .toByteString();
-            fullName = com.akkagrpc.grpc.${aggregate_name_with_proper_case}Added.getDescriptor().getFullName();
+            fullName = com.akkagrpc.${aggregate_name_with_lower_case}.${aggregate_name_with_proper_case}Added.getDescriptor().getFullName();
 
         } else {
             throw new IllegalArgumentException("Unknown event type: " + event.getClass());
