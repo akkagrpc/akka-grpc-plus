@@ -56,17 +56,17 @@ Files.writeString(localSharedConfFilePath, local_shared_conf_content);
 
 Path local1ConfFilePath = projectPath.resolve("src/main/resources/local1.conf")
 String local_1_conf_content = Files.readString(local1ConfFilePath)
-local_1_conf_content = local_1_conf_content.replaceAll("movie", packageExp)
+local_1_conf_content = local_1_conf_content.replaceAll("movie", artifactIdLowerCaseExp)
 Files.writeString(local1ConfFilePath, local_1_conf_content);
 
 Path local2ConfFilePath = projectPath.resolve("src/main/resources/local2.conf")
 String local_2_conf_content = Files.readString(local2ConfFilePath)
-local_2_conf_content = local_2_conf_content.replaceAll("movie", packageExp)
+local_2_conf_content = local_2_conf_content.replaceAll("movie", artifactIdLowerCaseExp)
 Files.writeString(local2ConfFilePath, local_2_conf_content);
 
 Path local3ConfFilePath = projectPath.resolve("src/main/resources/local3.conf")
 String local_3_conf_content = Files.readString(local3ConfFilePath)
-local_3_conf_content = local_3_conf_content.replaceAll("movie", packageExp)
+local_3_conf_content = local_3_conf_content.replaceAll("movie", artifactIdLowerCaseExp)
 Files.writeString(local3ConfFilePath, local_3_conf_content);
 
 Path dc_appFilePath = projectPath.resolve("docker-compose-app.yml")
