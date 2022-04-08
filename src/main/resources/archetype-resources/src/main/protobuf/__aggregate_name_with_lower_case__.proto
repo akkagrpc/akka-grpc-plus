@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package com.akkagrpc.proto;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option java_package = "com.akkagrpc.grpc";
+option java_multiple_files = true;
+
+message ValidateActiveDirectoryDetailsRequest {
+  string domainName = 1;
+  string ipAddress = 2;
+  string port = 3;
+  string username = 4;
+  string password = 5;
+}
+
+message ValidateActiveDirectoryDetailsResponse {
+  bool response = 1;
+}
+ 
+message GetMovieRequest {
+  string movieId = 1;
+}
+message GetMovieResponse {
+  Movie movie = 1;
+}
+
+message GetMoviesResponse {
+  Movie movie = 1;
+}
+
+message Movie {
+  string movieId = 1;
+  string title = 2;
+  float rating = 3;
+  int32 releaseYear = 4;
+  Genre genre = 5;
+}
+
+message RegisterMovieRequest {
+  string title = 1;
+  float rating = 2;
+  int32 releaseYear = 3;
+  Genre genre = 4;
+}
+
+enum Genre {
+  COMEDY = 0;
+  ACTION = 1;
+  HORROR = 2;
+  DRAMA = 3;
+  THRILLER = 4;
+  SCIFI = 5;
+  ROMANCE = 6;
+}
+
+message RegisterMovieResponse {
+  string movieId = 1;
+}
+
+message DisableMovieRequest {
+  string movieId = 1;
+}
+
+message DisableMovieResponse {
+  string response = 1;
+}
+
+service MovieService {
+  rpc getMovie(GetMovieRequest) returns (GetMovieResponse) {
+    option (google.api.http) = {
+      get: "/movies/{movieId}"
+    };
+  };
+  rpc getMovies(google.protobuf.Empty) returns (stream GetMoviesResponse) {
+    option (google.api.http) = {
+      get: "/movies"
+    };
+  };
+  rpc RegisterMovie (RegisterMovieRequest) returns (RegisterMovieResponse) {
+    option(google.api.http) = {
+      post: "/movies"
+      body: "*"
+    };
+  };
+  rpc DisableMovie (DisableMovieRequest) returns (DisableMovieResponse) {
+    option(google.api.http) = {
+      delete: "/movies/{movieId}"
+    };
+  };
+}

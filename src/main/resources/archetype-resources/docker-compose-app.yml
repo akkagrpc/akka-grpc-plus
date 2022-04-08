@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  MovieService:
+    image: akka-grpc-quickstart:1.0
+    ports:
+      - "8101:8101"
+      - "2551:2551"
+      - "9101:9101"
+      - "9551:9551"
+    environment:
+      - -DAPP_CONFIG=local1.conf
+
+  Envoy-Proxy:
+    image: envoyproxy/envoy:v1.21-latest
+    ports:
+      - "51051:51051"
+    volumes:
+      - ./movie.pb:/data/movie.pb:ro
+      - ./envoy-config.yml:/etc/envoy/envoy.yaml:ro
