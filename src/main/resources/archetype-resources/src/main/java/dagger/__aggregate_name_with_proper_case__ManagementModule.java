@@ -44,10 +44,6 @@ public interface ${aggregate_name_with_proper_case}ManagementModule {
 
     @Singleton
     @Binds
-    DBProjectionHandler bindDBProjectionHandler(DBProjectionHandlerImpl impl);
-
-    @Singleton
-    @Binds
     DBProjection bindDBProjection(DBProjectionImpl impl);
 
     @Singleton
