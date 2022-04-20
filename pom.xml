@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.akkagrpc</groupId>
-  <artifactId>akka-grpc-quickstart-archetype</artifactId>
-  <version>1.1</version>
-  <packaging>maven-archetype</packaging>
+    <groupId>com.akkagrpc</groupId>
+    <artifactId>akka-grpc-quickstart-archetype</artifactId>
+    <version>1.3-SNAPSHOT</version>
+    <packaging>maven-archetype</packaging>
 
     <name>akka-grpc-quickstart-archetype</name>
     <url>https://github.com/gmkumar2005/akka-grpc-plus</url>
@@ -81,19 +81,17 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>1.5</version>
+                    <groupId>org.simplify4u.plugins</groupId>
+                    <artifactId>sign-maven-plugin</artifactId>
+                    <version>1.0.1</version>
                     <executions>
                         <execution>
-                            <id>sign-artifacts</id>
-                            <phase>verify</phase>
                             <goals>
                                 <goal>sign</goal>
                             </goals>
                             <configuration>
-                                <keyname>${gpg.keyname}</keyname>
-                                <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                                <!-- the same id as in settings.xml -->
+                                <serverId>OSSRH-79162-KEY</serverId>
                             </configuration>
                         </execution>
                     </executions>
