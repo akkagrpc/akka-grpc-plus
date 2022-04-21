@@ -27,7 +27,12 @@ jobs:
           command: mvn -s .circleci/settings.xml -B -DskipTests  help:system       
       - run:
           name: Debug2
-          command: echo "[SIGN_KEY] $SIGN_KEY"                  
+          command: |
+            printenv
+            export MY_INT_ENV_VAR=a_value;
+            echo "MY_INT_ENV_VAR=$MY_INT_ENV_VAR";
+            echo "ABC=$SIGN_KEY abc";
+            echo "[ABC] = $ABC"             
       # Then run your tests!
       - run:
           name: Test
