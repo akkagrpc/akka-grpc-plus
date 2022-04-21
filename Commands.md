@@ -43,4 +43,5 @@ mvn sign:sign
 ### Update project version
 ```
 mvn release:update-versions
+mvn versions:set -DnewVersion=1.3.0
 ```
