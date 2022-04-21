@@ -4,7 +4,7 @@
 
     <groupId>com.akkagrpc</groupId>
     <artifactId>akka-grpc-quickstart-archetype</artifactId>
-    <version>1.7-SNAPSHOT</version>
+    <version>1.8-SNAPSHOT</version>
     <packaging>maven-archetype</packaging>
 
     <name>akka-grpc-quickstart-archetype</name>
