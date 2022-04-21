@@ -1,0 +1,28 @@
+<settings>
+    <servers>
+        <server>
+            <id>OSSRH-79162</id>
+            <username>${env.SONATYPE_USERNAME}</username>
+            <password>${env.SONATYPE_PASSWORD}</password>
+        </server>
+        <server>
+            <id>OSSRH-79162-KEY</id>
+            <username>${env.SIGN_KEY_ID}                 <!-- key id in hex, optional --></username>
+            <passphrase>${env.SIGN_KEY_PASS}                <!-- private key passphrase, can be encrypted --></passphrase>
+            <privateKey>${env.SIGN_KEY}                <!-- private key file location --></privateKey>
+        </server>
+    </servers>
+    <profiles>
+        <profile>
+            <id>OSSRH-79162</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <gpg.executable>gpg</gpg.executable>
+                <gpg.keyname>${env.GPG_KEY_NAME}</gpg.keyname>
+                <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+            </properties>
+        </profile>
+    </profiles>
+</settings>
