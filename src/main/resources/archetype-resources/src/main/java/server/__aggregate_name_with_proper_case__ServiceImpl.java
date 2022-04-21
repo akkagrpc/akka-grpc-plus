@@ -67,7 +67,7 @@ public final class ${aggregate_name_with_proper_case}ServiceImpl implements ${ag
         this.clusterSharding = ClusterSharding.get(system);
         this.blockingJdbcExecutor = system.dispatchers().lookup(dispatcherSelector);
         this.meterRegistry = micrometerClient.monitoringSystem();
-        this.${aggregate_name_with_lower_case}Counter = this.meterRegistry.counter("${aggregate_name_with_lower_case}", "count");
+        this.${aggregate_name_with_lower_case}Counter = this.meterRegistry.counter("${aggregate_name_with_lower_case}", "count", "type");
 
     }
 
